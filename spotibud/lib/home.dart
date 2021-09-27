@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 
 
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatefulWidget{
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +43,7 @@ class HomeScreen extends StatelessWidget{
                     fontSize: 35.0,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2.5,
-                    color: Colors.green,
+                    color: Colors.white,
                     fontFamily: 'Merriweather'
                 ),
               ),
@@ -40,17 +54,17 @@ class HomeScreen extends StatelessWidget{
 
             Container(
               padding: EdgeInsets.all(5.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green[600])
-                ),
-                child: Text('History',
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  print("History");
+                },
+                backgroundColor: Colors.green,
+                label: Text('History',
                   style: TextStyle(
                       fontSize: 25.0,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontFamily: 'Merriweather'
                   ),
                 ),
@@ -62,17 +76,17 @@ class HomeScreen extends StatelessWidget{
             ),
             Container(
               padding: EdgeInsets.all(5.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green[600])
-                ),
-                child: Text('New',
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  print("New");
+                },
+                backgroundColor: Colors.green,
+                label: Text('New',
                   style: TextStyle(
                       fontSize: 25.0,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontFamily: 'Merriweather'
                   ),
                 ),
@@ -83,17 +97,17 @@ class HomeScreen extends StatelessWidget{
             ),
             Container(
               padding: EdgeInsets.all(5.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green[600])
-                ),
-                child: Text('Forgotten but loved',
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  print("Forgotten");
+                },
+                backgroundColor: Colors.green,
+                label: Text('Forgotten',
                   style: TextStyle(
                       fontSize: 25.0,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontFamily: 'Merriweather'
                   ),
                 ),
@@ -102,20 +116,18 @@ class HomeScreen extends StatelessWidget{
           ],
         ),),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.green[600],
-        items: [
+        selectedItemColor: Colors.white,
+        backgroundColor: Colors.green,
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.login),
-              label: "Login",
-              backgroundColor: Colors.green[600]),
+              label: "Login"),
           BottomNavigationBarItem(
               icon: Icon(Icons.bug_report),
-              label: "Help",
-              backgroundColor: Colors.green[600]),
+              label: "Help"),
         ],
-        onTap: (index){
-          print("Ok");
-        },
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
