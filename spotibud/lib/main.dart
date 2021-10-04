@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'package:spotibud/pages/root_app.dart';
 
 void main() => runApp(MaterialApp(
-  theme: new ThemeData(scaffoldBackgroundColor: Colors.black38),
-  home: HomeScreen(),
-));
-
-
+      debugShowCheckedModeBanner: false,
+      home: RootApp(),
+    ));
