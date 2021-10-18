@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Spotibud',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
       ),
 
     home: LoginScreen(),);

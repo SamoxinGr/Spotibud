@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:spotibud/pages/root_app.dart';
 import 'package:spotibud/request/requests.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() {
               flutterWebviewPlugin.close();
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomePage()));
+                  MaterialPageRoute(builder: (context) => RootApp()));
             });
           }
         }
