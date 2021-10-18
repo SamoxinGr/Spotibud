@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 
 import 'home_page.dart';
+import 'loading_page.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -26,6 +27,7 @@ class _RootAppState extends State<RootApp> {
     return IndexedStack(
       index: activeTab,
       children: [
+        LoginScreen(),
         HomePage(),
         /*Center(
           child: Text(

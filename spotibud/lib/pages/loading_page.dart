@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:spotibud/request/requests.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'dart:async';
+
 
 import 'package:spotibud/src/requests/requests.dart';
 
@@ -22,16 +23,17 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final flutterWebviewPlugin = FlutterWebviewPlugin();
 
-  late StreamSubscription _onDestroy;
+  late StreamSubscription onDestroy;
   late StreamSubscription<String> _onUrlChanged;
   late StreamSubscription<WebViewStateChanged> _onStateChanged;
 
-  String? token = "0";
+  String? token = '0';
+
 
   @override
   void dispose() {
     // Every listener should be canceled, the same should be done with this stream.
-    _onDestroy.cancel();
+    onDestroy.cancel();
     _onUrlChanged.cancel();
     _onStateChanged.cancel();
     flutterWebviewPlugin.dispose();
@@ -45,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     flutterWebviewPlugin.close();
 
     // Add a listener to on destroy WebView, so you can make came actions.
-    _onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
+    onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
       print("destroy");
     });
 
@@ -55,42 +57,40 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
     // Add a listener to on url changed
-    _onUrlChanged = flutterWebviewPlugin.onUrlChanged.listen((String url) {
+    _onUrlChanged = flutterWebviewPlugin.onUrlChanged.listen((String url) async {
       if (mounted) {
-        setState(() async {
-          print("URL changed: $url");
-          if (url.startsWith('https://github.com/SamoxinGr/Naughty-code')) {
-            RegExp regExp = RegExp("#access_token=(.*)");
-            this.token = regExp.firstMatch(url)?.group(1);
-            print("token $token");
-            var acToken = await getToken(token);
-            if (this.token != '0'){
-              setState((){
-                flutterWebviewPlugin.close();
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => HomePage()));
-              }
+        print("URL changed: $url");
+        if (url.startsWith('https://github.com/SamoxinGr/Naughty-code')) {
+          RegExp regExp = RegExp("code=(.*)");
+          this.token = regExp.firstMatch(url)?.group(1);
+          print(this.token);
+          print('Check');
+          print(token);
+          var myToken = await getToken(token);
+          if (this.token != '0') {
+            setState(() {
+              flutterWebviewPlugin.close();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomePage()));
+            });
+          }
+        }
+      }
+    });
+  }
 
-              );
-            }
-            }
-        });
-    };
+  //Future<void> authorizeUser() async{
 
-    @override
-    Widget build(BuildContext context) {
-      String loginUrl = "$AUTHORIZE?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=user-read-private%20user-read-email";
-
-      return new WebviewScaffold(
-          url: loginUrl,
-          appBar: new AppBar(
-            title: new Text("Login to Spotify..."),
-          ));
-    }
-  });}
+  //}
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }}
+    String loginUrl = "$AUTHORIZE?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=user-read-private%20user-read-email";
+
+    return WebviewScaffold(
+        url: loginUrl,
+        appBar: AppBar(
+          title: const Text("Login to Spotify..."),
+        ));
+  }
+}
