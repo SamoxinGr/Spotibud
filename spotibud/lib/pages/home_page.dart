@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(onPressed: authorization, child: Text("press")),
+          ElevatedButton(onPressed: (null), child: Text("press")),
           SizedBox(height: 30),
           TextField(
             onSubmitted: (String? code) {
