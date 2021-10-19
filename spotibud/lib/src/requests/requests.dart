@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:spotibud/pages/home_page.dart';
 //import 'package:url_launcher/url_launcher.dart';
 
-dynamic user_id = "mh5y1ps99zoyhsq8jaqxfb4gs";
+//dynamic user_id = "mh5y1ps99zoyhsq8jaqxfb4gs";
 
 String client_id = "6e7d62a9d6d84e3b9fb0f0eef26050f5";
 String client_secret = "0891a218c5db42c6a47a062b209fe7ef";
