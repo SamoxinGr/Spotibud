@@ -27,7 +27,6 @@ class _RootAppState extends State<RootApp> {
     return IndexedStack(
       index: activeTab,
       children: [
-        LoginScreen(),
         HomePage(),
         /*Center(
           child: Text(

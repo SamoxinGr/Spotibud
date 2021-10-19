@@ -66,7 +66,19 @@ class _LoginScreenState extends State<LoginScreen> {
           print(this.token);
           print('Check');
           print(token);
+
           var myToken = await getToken(token);
+
+          await getUser(myToken["access_token"]);
+
+          print("REFRESH");
+          Map<String, dynamic> refTok =
+              await refreshToken(myToken["refresh_token"]);
+          //print(refTok);
+
+          //новый токен в запросе
+          getUserTopArtist(refTok["access_token"]);
+
           if (this.token != '0') {
             setState(() {
               flutterWebviewPlugin.close();
@@ -86,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     String loginUrl =
-        "$AUTHORIZE?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=user-read-private%20user-read-email";
+        "$AUTHORIZE?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=user-read-private%20user-read-email%20user-top-read";
 
     return WebviewScaffold(
         url: loginUrl,
