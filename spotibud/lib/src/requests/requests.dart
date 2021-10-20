@@ -109,7 +109,7 @@ Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
 Future<Map<String, dynamic>> getUserTopArtist(dynamic token) async {
   final Map<String, String> getUserAristHeaders = {
     "Accept": "application/json",
-    "time_range": "short_term&limit=5",
+    "time_range": "long_term&limit=5",
     "Content-Type": "application/json",
     "Authorization": "Bearer $token",
   };
@@ -124,8 +124,13 @@ Future<Map<String, dynamic>> getUserTopArtist(dynamic token) async {
     // If the server did return a 200 CREATED response,
     final artists_info = convert.jsonDecode(getUserTopArtistResponse.body)
         as Map<String, dynamic>;
-    print(artists_info);
+    //print(artists_info);
     print("ARTISTS");
+    print(artists_info['items'][0]['name']);
+    print(artists_info['items'][1]['name']);
+    print(artists_info['items'][2]['name']);
+    print(artists_info['items'][3]['name']);
+    print(artists_info['items'][4]['name']);
     return artists_info;
   } else {
     // If the server did not return a 200 CREATED response,

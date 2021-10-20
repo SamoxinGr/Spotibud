@@ -71,13 +71,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
           await getUser(myToken["access_token"]);
 
-          print("REFRESH");
+          /*print("REFRESH");
           Map<String, dynamic> refTok =
               await refreshToken(myToken["refresh_token"]);
-          //print(refTok);
-
+          */
           //новый токен в запросе
-          getUserTopArtist(refTok["access_token"]);
+          //getUserTopArtist(refTok["access_token"]);
+          getUserTopArtist(myToken["access_token"]);
 
           if (this.token != '0') {
             setState(() {
