@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:spotibud/pages/root_app.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:spotibud/src/requests/requests.dart';
+import 'package:spotibud/src/utils/secure_storage.dart';
 
 import 'home_page.dart';
 
@@ -68,17 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
           print(token);
 
           var myToken = await getToken(token);
-
-          await getUser(myToken["access_token"]);
-
-          /*print("REFRESH");
-          Map<String, dynamic> refTok =
-              await refreshToken(myToken["refresh_token"]);
-          */
-          //новый токен в запросе
-          //getUserTopArtist(refTok["access_token"]);
-          getUserTopArtist(myToken["access_token"]);
-
+          UserSecureStorage.setTokenInStorage(myToken['access_token']);
+          await getUserTopTracks(myToken['access_token']); // временно
+          //await getUser(myToken["access_token"]);
           if (this.token != '0') {
             setState(() {
               flutterWebviewPlugin.close();
@@ -90,10 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     });
   }
-
-  //Future<void> authorizeUser() async{
-
-  //}
 
   @override
   Widget build(BuildContext context) {

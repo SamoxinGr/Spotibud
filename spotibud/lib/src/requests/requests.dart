@@ -2,9 +2,12 @@ import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:spotibud/src/utils/secure_storage.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:spotibud/pages/home_page.dart';
+import 'package:spotibud/src/objects/topOfArtists.dart' as artists;
+import 'package:spotibud/src/objects/topOfTracks.dart' as tracks;
 //import 'package:url_launcher/url_launcher.dart';
 
 //dynamic user_id = "mh5y1ps99zoyhsq8jaqxfb4gs";
@@ -13,6 +16,42 @@ String client_id = "6e7d62a9d6d84e3b9fb0f0eef26050f5";
 String client_secret = "0891a218c5db42c6a47a062b209fe7ef";
 String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
 
+Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
+  final Map<String, String> tokenBody = {
+    "grant_type": "authorization_code",
+    "client_id": client_id,
+    "client_secret": client_secret,
+    "code": "$code",
+    "redirect_uri": 'https://github.com/SamoxinGr/Naughty-code'
+  };
+
+  final Map<String, String> headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Accept": "*/*",
+  };
+
+  final Response tokenRequestResponse = await http.post(
+      Uri.https('accounts.spotify.com', '/api/token'),
+      headers: headers,
+      body: tokenBody);
+  print(tokenRequestResponse.request);
+
+  if (tokenRequestResponse.statusCode != 200) {
+    var statusCode = tokenRequestResponse.statusCode;
+    throw Exception('Failed to get TOKEN response. Status code = $statusCode');
+  } else {
+    final token = await convert.jsonDecode(tokenRequestResponse.body)
+        as Map<String, dynamic>;
+    print(token);
+    print(token['access_token']);
+    //dynamic accessToken = token['access_token'];
+    print("LOOK AT ME");
+    UserSecureStorage.setTokenAsOwnerInStorage(token['access_token']);
+    return token;
+  }
+}
+
+//get token as owner
 Future<Map<String, dynamic>> getToken(String? code) async {
   final Map<String, String> tokenBody = {
     "grant_type": "authorization_code",
@@ -39,15 +78,12 @@ Future<Map<String, dynamic>> getToken(String? code) async {
   } else {
     final token = await convert.jsonDecode(tokenRequestResponse.body)
         as Map<String, dynamic>;
-    print("alarm");
-    print(token);
-    print(token['access_token']);
-    //dynamic accessToken = token['access_token'];
-    print("LOOK AT ME");
+    UserSecureStorage.setTokenAsOwnerInStorage(token['access_token']);
     return token;
   }
 }
 
+//User INFO
 Future<Map<String, dynamic>> getUser(dynamic token) async {
   final Map<String, String> headers = {
     "Content-Type": "application/x-www-form-urlencoded",
@@ -105,37 +141,76 @@ Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
   }
 }
 
-// ТОП 5 артистов в споти
-Future<Map<String, dynamic>> getUserTopArtist(dynamic token) async {
+// ТОП 10 artists
+Future<List<dynamic>> getUserTopArtists(dynamic token) async {
+  final Map<String, String> getUserArtistbody = {
+    'time_range': 'short_term',
+    'limit': '10',
+    'offset': '0',
+  };
+
   final Map<String, String> getUserAristHeaders = {
     "Accept": "application/json",
-    "time_range": "long_term&limit=5",
     "Content-Type": "application/json",
     "Authorization": "Bearer $token",
   };
 
   final Response getUserTopArtistResponse = await http.get(
-      Uri.https('api.spotify.com', '/v1/me/top/artists'),
+      Uri.https('api.spotify.com', '/v1/me/top/artists', getUserArtistbody),
       headers: getUserAristHeaders);
 
-  print(getUserTopArtistResponse.request);
+  //print(getUserTopArtistResponse.request);
 
   if (getUserTopArtistResponse.statusCode == 200) {
+    List<dynamic> myList = List.filled(10, 0, growable: false);
+    var numberOfArtists = 10;
     // If the server did return a 200 CREATED response,
     final artists_info = convert.jsonDecode(getUserTopArtistResponse.body)
         as Map<String, dynamic>;
-    //print(artists_info);
-    print("ARTISTS");
-    print(artists_info['items'][0]['name']);
-    print(artists_info['items'][1]['name']);
-    print(artists_info['items'][2]['name']);
-    print(artists_info['items'][3]['name']);
-    print(artists_info['items'][4]['name']);
-    return artists_info;
+    for (int i = 0; i < numberOfArtists; i++) {
+      myList[i] = artists.topOfArtists.fromJson(artists_info["items"][i]);
+    }
+    return myList;
   } else {
     // If the server did not return a 200 CREATED response,
     var statusCode = getUserTopArtistResponse.statusCode;
     throw Exception(
         'Failed to get Arists USER response. Status code = $statusCode');
+  }
+}
+
+//ТОП 10 tracks
+Future<List<dynamic>> getUserTopTracks(dynamic token) async {
+  final Map<String, String> getUserTrackbody = {
+    'time_range': 'short_term',
+    'limit': '10',
+    'offset': '0',
+  };
+
+  final Map<String, String> getUserTrackHeaders = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $token",
+  };
+
+  final Response getUserTopTracksResponse = await http.get(
+      Uri.https('api.spotify.com', '/v1/me/top/tracks', getUserTrackbody),
+      headers: getUserTrackHeaders);
+
+  if (getUserTopTracksResponse.statusCode == 200) {
+    List<dynamic> myList = List.filled(10, 0, growable: false);
+    var numberOfTracks = 10;
+    // If the server did return a 200 CREATED response,
+    final tracks_info = convert.jsonDecode(getUserTopTracksResponse.body)
+        as Map<String, dynamic>;
+    for (int i = 0; i < numberOfTracks; i++) {
+      myList[i] = tracks.topOfTracks.fromJson(tracks_info["items"][i]);
+    }
+    return myList;
+  } else {
+    // If the server did not return a 200 CREATED response,
+    var statusCode = getUserTopTracksResponse.statusCode;
+    throw Exception(
+        'Failed to get tracks USER response. Status code = $statusCode');
   }
 }

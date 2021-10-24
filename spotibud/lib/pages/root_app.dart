@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:spotibud/src/requests/requests.dart';
+import 'package:spotibud/src/utils/secure_storage.dart';
 
 import 'home_page.dart';
 import 'loading_page.dart';
@@ -28,13 +30,6 @@ class _RootAppState extends State<RootApp> {
       index: activeTab,
       children: [
         HomePage(),
-        /*Center(
-          child: Text(
-            "Home",
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),*/
         Center(
           child: Text(
             "Library",
