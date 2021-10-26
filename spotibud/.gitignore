@@ -45,4 +45,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/spotibud/lib/src/auth.dart
+/lib/src/auth.dart
