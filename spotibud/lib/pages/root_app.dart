@@ -3,9 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:spotibud/pages/top_page.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
 
+import '../main.dart';
 import 'home_page.dart';
 import 'loading_page.dart';
 
@@ -15,12 +17,17 @@ class RootApp extends StatefulWidget {
 }
 
 class _RootAppState extends State<RootApp> {
+  int index = 0;
+  final pages = [
+    HomePage(),
+    SongsPage(),
+  ];
   int activeTab = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar: getFooter(),
+      bottomNavigationBar: getPage(context),
       body: getBody(),
     );
   }
@@ -55,7 +62,7 @@ class _RootAppState extends State<RootApp> {
     );
   }
 
-  Widget getFooter() {
+  /*Widget getFooter() {
     List items = [Icons.home, Icons.book, Icons.search, Icons.settings];
     return Container(
       height: 80,
@@ -80,5 +87,30 @@ class _RootAppState extends State<RootApp> {
         ),
       ),
     );
-  }
+  }*/
+
+  @override
+  Widget getPage(BuildContext context)=> Scaffold(
+    appBar: AppBar(
+      title: Text("Spotibud"),),
+    body: pages[index],
+    bottomNavigationBar: BottomNavigationBar(
+      backgroundColor: Colors.black,
+      unselectedItemColor: Colors.white.withOpacity(0.7),
+      selectedItemColor: Colors.white,
+      currentIndex: index,
+      onTap: (int index) => setState(() => this.index = index),
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.note),
+          label: "Top Songs",
+        ),
+      ],
+    ),
+    );
+
 }

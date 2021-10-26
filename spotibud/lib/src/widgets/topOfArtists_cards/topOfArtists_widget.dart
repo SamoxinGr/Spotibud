@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spotibud/pages/cubit/topOfArtists_cubit.dart';
+import 'package:spotibud/pages/cubit/topOfArtists/topOfArtists_cubit.dart';
 import 'package:spotibud/src/objects/topOfArtists.dart';
+
 
 Widget topOfArtistsWidget(
     topOfArtists item, BuildContext context, topOfArtistsLoadedState state) {
+
   return Card(
     margin: EdgeInsets.all(10),
     elevation: 20,
@@ -15,12 +17,21 @@ Widget topOfArtistsWidget(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTile(
-          leading: Image(image: NetworkImage(item.images)),
+          leading: CircleAvatar(
+              radius: 35,
+              backgroundImage: NetworkImage(item.images)),
           title: Text(
             "${item.name}",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(
+              fontSize: 25,
+
+            ),
           ),
-          subtitle: Text("${item.genres}"),
+          subtitle: Text("${item.genres[0]}", style: TextStyle(
+              color: Colors.black,
+              fontFamily:"Merriweather",
+              fontWeight:FontWeight.bold,
+          ),),
         ),
       ],
     ),

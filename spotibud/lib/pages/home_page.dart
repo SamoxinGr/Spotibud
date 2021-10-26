@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:spotibud/pages/cubit/topOfSongs/topOfSongs_cubit.dart';
 import 'package:spotibud/src/objects/topOfArtists.dart';
 import 'dart:convert' as convert;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:spotibud/src/objects/topOfArtists.dart';
-import 'package:spotibud/pages/cubit/topOfArtists_cubit.dart';
+import 'package:spotibud/pages/cubit/topOfArtists/topOfArtists_cubit.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:spotibud/pages/loading_page.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
@@ -23,6 +24,13 @@ class HomePage extends StatelessWidget {
       child: const _HomePageState(),
     );
   }
+
+  /*@override
+  Widget getSongs(BuildContext context){
+    return BlocProvider(create: (_) => topOfSongsCubit(),
+    child: const _HomePageState(),
+    );
+  }*/
 }
 
 //class _HomePageState extends State<HomePage> {
@@ -33,39 +41,36 @@ class _HomePageState extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<topOfArtistsCubit, topOfArtistsState>(
         builder: (context, state) {
-      if (state is topOfArtistsInitial) {
-        context.read<topOfArtistsCubit>().informInitial();
-        context
-            .read<topOfArtistsCubit>()
-            .loadtopOfArtists(); // run Circular progress bar while news is loading
-        return const Center(
-          child: CircularProgressIndicator(backgroundColor: Colors.amber),
-        );
-      }
-      /*if (state is NewsErrorState) {
-        // Throw error if state is NewsError
-        return ErrorPage(exceptionPageName: LastNewsPage()); ПОКА без этого
-      }*/
-      if (state is topOfArtistsLoadedState) {
-        // Reload News if state is NewsReload (wheel page down)
-        return RefreshIndicator(
-          child: Scaffold(
-            appBar: getAppBar(),
-            body: getBody(state),
-          ),
-          backgroundColor: Colors.blue,
-          onRefresh: () =>
-              context.read<topOfArtistsCubit>().reloadtopOfArtists(),
-        );
-      }
-      return Container();
-    });
+          if (state is topOfArtistsInitial) {
+            context.read<topOfArtistsCubit>().informInitial();
+            context
+                .read<topOfArtistsCubit>()
+                .loadtopOfArtists(); // run Circular progress bar while news is loading
+            return const Center(
+              child: CircularProgressIndicator(backgroundColor: Colors.amber),
+            );
+          }
+
+          if (state is topOfArtistsLoadedState) {
+            return RefreshIndicator(
+              child: Scaffold(
+                appBar: getAppBar(),
+                body: getBody(state),
+              ),
+              backgroundColor: Colors.blue,
+              onRefresh: () =>
+                  context.read<topOfArtistsCubit>().reloadtopOfArtists(),
+            );
+          }
+          return Container();
+        });
   }
+
 
   PreferredSizeWidget getAppBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.grey[850],
+      backgroundColor: Colors.black,
       elevation: 0,
       title: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -80,12 +85,14 @@ class _HomePageState extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
             Icon(Icons
-                .list) //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
+                .list)
+            //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
           ],
         ),
       ),
     );
   }
+
 
   Widget getBody(state) {
     //var screenHeight = MediaQuery.of().size.height;
@@ -96,9 +103,11 @@ class _HomePageState extends StatelessWidget {
         return InkWell(
           onTap: () => launchUniversalLink(state.topOfArtistsList[index].uri),
           child:
-              topOfArtistsWidget(state.topOfArtistsList[index], context, state),
+          topOfArtistsWidget(state.topOfArtistsList[index], context, state),
         );
       },
     );
   }
+
+
 }

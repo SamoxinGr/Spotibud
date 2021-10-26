@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Add a listener to on destroy WebView, so you can make came actions.
     onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
-      print("destroy");
+
     });
 
     _onStateChanged =
@@ -71,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
           var myToken = await getToken(token);
           UserSecureStorage.setTokenInStorage(myToken['access_token']);
-          await getUserTopTracks(myToken['access_token']); // временно
-          //await getUser(myToken["access_token"]);
+          await getUserTopArtists(myToken['access_token']); // временно
+          await getUserTopSongs(myToken["access_token"]);
           if (this.token != '0') {
             setState(() {
               flutterWebviewPlugin.close();
@@ -94,6 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
         url: loginUrl,
         appBar: AppBar(
           title: const Text("Login to Spotify..."),
+          backgroundColor: Colors.black,
+          leading: Image.asset("assets/images/image.jpeg"),
         ));
   }
 }

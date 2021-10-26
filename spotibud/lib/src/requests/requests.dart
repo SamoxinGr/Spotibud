@@ -7,7 +7,7 @@ import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:spotibud/pages/home_page.dart';
 import 'package:spotibud/src/objects/topOfArtists.dart' as artists;
-import 'package:spotibud/src/objects/topOfTracks.dart' as tracks;
+import 'package:spotibud/src/objects/topOfSongs.dart' as songs;
 //import 'package:url_launcher/url_launcher.dart';
 
 //dynamic user_id = "mh5y1ps99zoyhsq8jaqxfb4gs";
@@ -180,37 +180,40 @@ Future<List<dynamic>> getUserTopArtists(dynamic token) async {
 }
 
 //ТОП 10 tracks
-Future<List<dynamic>> getUserTopTracks(dynamic token) async {
-  final Map<String, String> getUserTrackbody = {
+Future<List<dynamic>> getUserTopSongs(dynamic token) async {
+  final Map<String, String> getUserSongBody = {
     'time_range': 'short_term',
     'limit': '10',
     'offset': '0',
   };
 
-  final Map<String, String> getUserTrackHeaders = {
+  final Map<String, String> getUserSongHeaders = {
     "Accept": "application/json",
     "Content-Type": "application/json",
     "Authorization": "Bearer $token",
   };
 
-  final Response getUserTopTracksResponse = await http.get(
-      Uri.https('api.spotify.com', '/v1/me/top/tracks', getUserTrackbody),
-      headers: getUserTrackHeaders);
+  final Response getUserTopSongsResponse = await http.get(
+      Uri.https('api.spotify.com', '/v1/me/top/tracks', getUserSongBody),
+      headers: getUserSongHeaders);
 
-  if (getUserTopTracksResponse.statusCode == 200) {
-    List<dynamic> myList = List.filled(10, 0, growable: false);
-    var numberOfTracks = 10;
+  if (getUserTopSongsResponse.statusCode == 200) {
+    List<dynamic> newList = List.filled(10, 0, growable: false);
+    var numberOfSongs = 10;
     // If the server did return a 200 CREATED response,
-    final tracks_info = convert.jsonDecode(getUserTopTracksResponse.body)
+    final tracks_info = convert.jsonDecode(getUserTopSongsResponse.body)
         as Map<String, dynamic>;
-    for (int i = 0; i < numberOfTracks; i++) {
-      myList[i] = tracks.topOfTracks.fromJson(tracks_info["items"][i]);
+    for (int i = 0; i < numberOfSongs; i++) {
+      newList[i] = songs.topOfSongs.fromJson(tracks_info["items"][i]);
     }
-    return myList;
+    return newList;
   } else {
     // If the server did not return a 200 CREATED response,
-    var statusCode = getUserTopTracksResponse.statusCode;
+    var statusCode = getUserTopSongsResponse.statusCode;
     throw Exception(
         'Failed to get tracks USER response. Status code = $statusCode');
   }
 }
+
+
+//Top 10
