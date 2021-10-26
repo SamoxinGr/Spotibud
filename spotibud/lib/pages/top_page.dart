@@ -6,9 +6,7 @@ import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:spotibud/src/widgets/topOfSongs/topOfSongs_widget.dart';
 import 'dart:convert' as convert;
 
-
 import '../pages/cubit/topOfSongs/topOfSongs_cubit.dart';
-
 
 class SongsPage extends StatelessWidget {
   const SongsPage({Key? key}) : super(key: key);
@@ -28,7 +26,6 @@ class SongsPage extends StatelessWidget {
     );
   }*/
 
-
 }
 
 class _TopSongsPage extends StatelessWidget {
@@ -38,31 +35,27 @@ class _TopSongsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<topOfSongsCubit, TopOfSongsState>(
         builder: (context, state) {
-          if (state is topOfSongsInitial) {
-            context.read<topOfSongsCubit>().informInitial();
-            context
-                .read<topOfSongsCubit>()
-                .loadtopOfSongs();
-            return const Center(
-              child: CircularProgressIndicator(backgroundColor: Colors.amber),
-            );
-          }
+      if (state is topOfSongsInitial) {
+        context.read<topOfSongsCubit>().informInitial();
+        context.read<topOfSongsCubit>().loadtopOfSongs();
+        return const Center(
+          child: CircularProgressIndicator(backgroundColor: Colors.amber),
+        );
+      }
 
-          if (state is topOfSongsLoadedState) {
-            return RefreshIndicator(
-              child: Scaffold(
-                appBar: getAppBar(),
-                body: getBody(state),
-              ),
-              backgroundColor: Colors.blue,
-              onRefresh: () =>
-                  context.read<topOfSongsCubit>().reloadtopOfSongs(),
-            );
-          }
-          return Container();
-        });
+      if (state is topOfSongsLoadedState) {
+        return RefreshIndicator(
+          child: Scaffold(
+            appBar: getAppBar(),
+            body: getBody(state),
+          ),
+          backgroundColor: Colors.blue,
+          onRefresh: () => context.read<topOfSongsCubit>().reloadtopOfSongs(),
+        );
+      }
+      return Container();
+    });
   }
-
 
   PreferredSizeWidget getAppBar() {
     return AppBar(
@@ -81,15 +74,13 @@ class _TopSongsPage extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
             ),
-            Icon(Icons
-                .list)
+            Icon(Icons.list)
             //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
           ],
         ),
       ),
     );
   }
-
 
   Widget getBody(state) {
     //var screenHeight = MediaQuery.of().size.height;
@@ -98,10 +89,11 @@ class _TopSongsPage extends StatelessWidget {
       itemCount: state.topOfSongsList.length,
       itemBuilder: (context, index) {
         return InkWell(
-          onTap: () => launchUniversalLink(state.topOfSongsList[index].uri),
-          child:
-          topOfSongsWidget(state.topOfSongsList[index], context, state),
+          onTap: () =>
+              launchUniversalLink(state.topOfSongsList[index].external_urls),
+          child: topOfSongsWidget(state.topOfSongsList[index], context, state),
         );
       },
     );
-  }}
+  }
+}

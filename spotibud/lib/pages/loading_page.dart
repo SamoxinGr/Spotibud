@@ -48,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     flutterWebviewPlugin.close();
 
     // Add a listener to on destroy WebView, so you can make came actions.
-    onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
-
-    });
+    onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {});
 
     _onStateChanged =
         flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged state) {
@@ -71,8 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
           var myToken = await getToken(token);
           UserSecureStorage.setTokenInStorage(myToken['access_token']);
-          await getUserTopArtists(myToken['access_token']); // временно
-          await getUserTopSongs(myToken["access_token"]);
+          //await getUserTopArtists(myToken['access_token']); // временно
+          //await getUserTopSongs(myToken["access_token"]);
           if (this.token != '0') {
             setState(() {
               flutterWebviewPlugin.close();

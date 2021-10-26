@@ -90,27 +90,24 @@ class _RootAppState extends State<RootApp> {
   }*/
 
   @override
-  Widget getPage(BuildContext context)=> Scaffold(
-    appBar: AppBar(
-      title: Text("Spotibud"),),
-    body: pages[index],
-    bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: Colors.black,
-      unselectedItemColor: Colors.white.withOpacity(0.7),
-      selectedItemColor: Colors.white,
-      currentIndex: index,
-      onTap: (int index) => setState(() => this.index = index),
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Home",
+  Widget getPage(BuildContext context) => Scaffold(
+        body: pages[index],
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.black,
+          unselectedItemColor: Colors.white.withOpacity(0.7),
+          selectedItemColor: Colors.white,
+          currentIndex: index,
+          onTap: (int index) => setState(() => this.index = index),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.note),
+              label: "Top Songs",
+            ),
+          ],
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.note),
-          label: "Top Songs",
-        ),
-      ],
-    ),
-    );
-
+      );
 }

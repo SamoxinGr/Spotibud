@@ -8,19 +8,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:spotibud/pages/home_page.dart';
 import 'package:spotibud/src/objects/topOfArtists.dart' as artists;
 import 'package:spotibud/src/objects/topOfSongs.dart' as songs;
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:spotibud/src/auth.dart' as auth;
 
-//dynamic user_id = "mh5y1ps99zoyhsq8jaqxfb4gs";
-
-String client_id = "6e7d62a9d6d84e3b9fb0f0eef26050f5";
-String client_secret = "0891a218c5db42c6a47a062b209fe7ef";
 String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
 
 Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
   final Map<String, String> tokenBody = {
     "grant_type": "authorization_code",
-    "client_id": client_id,
-    "client_secret": client_secret,
+    "client_id": auth.client_id,
+    "client_secret": auth.client_secret,
     "code": "$code",
     "redirect_uri": 'https://github.com/SamoxinGr/Naughty-code'
   };
@@ -55,8 +51,8 @@ Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
 Future<Map<String, dynamic>> getToken(String? code) async {
   final Map<String, String> tokenBody = {
     "grant_type": "authorization_code",
-    "client_id": client_id,
-    "client_secret": client_secret,
+    "client_id": auth.client_id,
+    "client_secret": auth.client_secret,
     "code": "$code",
     "redirect_uri": 'https://github.com/SamoxinGr/Naughty-code'
   };
@@ -111,8 +107,8 @@ Future<Map<String, dynamic>> getUser(dynamic token) async {
 Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
   final Map<String, String> refreshTokenBody = {
     "grant_type": "refresh_token",
-    "client_id": client_id,
-    "client_secret": client_secret,
+    "client_id": auth.client_id,
+    "client_secret": auth.client_secret,
     "refresh_token": refreshToken,
   };
 
