@@ -297,11 +297,6 @@ Future<List<dynamic>> getArtistLastRelease(
 
     if (getArtistSingleResponse.statusCode == 200 ||
         getArtistAlbumResponse.statusCode == 200) {
-      /*final lastAlbum_info = convert.jsonDecode(getArtistAlbumResponse.body)
-          as Map<String, dynamic>;
-      final lastSingle_info = convert.jsonDecode(getArtistSingleResponse.body)
-          as Map<String, dynamic>;*/
-      /*print(lastAlbum_info);*/
       var single = DateTime.parse(lastSingle_info['items'][0]['release_date']);
       var album = DateTime.now();
       if ((lastAlbum_info['total'] as int) != 0) {
@@ -309,14 +304,11 @@ Future<List<dynamic>> getArtistLastRelease(
       } else {
         album = DateTime.utc(1900, 1, 1);
       }
-      //print(lastSingle_info['items'][0]['type']);
       if (single.isAfter(album) == true) {
-        newList[i] = follows.lastNews.fromJson(lastSingle_info['items'][0]);
+        newList.add(follows.lastNews.fromJson(lastSingle_info['items'][0]));
       } else {
-        newList[i] = follows.lastNews.fromJson(lastAlbum_info['items'][0]);
+        newList.add(follows.lastNews.fromJson(lastAlbum_info['items'][0]));
       }
-      print(newList[i]);
-      //return newList;
     } else {
       // If the server did not return a 200 CREATED response,
       var statusCode = getArtistSingleResponse.statusCode;
