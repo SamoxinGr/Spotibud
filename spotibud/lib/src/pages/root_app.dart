@@ -1,15 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart';
-import 'package:spotibud/pages/top_page.dart';
-import 'package:spotibud/src/requests/requests.dart';
-import 'package:spotibud/src/utils/secure_storage.dart';
-
-import '../main.dart';
+import 'package:spotibud/src/pages/top_page.dart';
+import 'package:spotibud/src/pages/lastNews_page.dart';
 import 'home_page.dart';
-import 'loading_page.dart';
+import 'lastNews_page.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -21,6 +15,7 @@ class _RootAppState extends State<RootApp> {
   final pages = [
     HomePage(),
     SongsPage(),
+    LastNewsPage(),
   ];
   int activeTab = 0;
   @override
@@ -28,10 +23,11 @@ class _RootAppState extends State<RootApp> {
     return Scaffold(
       backgroundColor: Colors.black,
       bottomNavigationBar: getPage(context),
-      body: getBody(),
+      //body: getBody(),
     );
   }
 
+/*
   Widget getBody() {
     return IndexedStack(
       index: activeTab,
@@ -60,7 +56,7 @@ class _RootAppState extends State<RootApp> {
         )
       ],
     );
-  }
+  }*/
 
   /*Widget getFooter() {
     List items = [Icons.home, Icons.book, Icons.search, Icons.settings];
@@ -107,6 +103,8 @@ class _RootAppState extends State<RootApp> {
               icon: Icon(Icons.note),
               label: "Top Songs",
             ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.new_releases), label: "News")
           ],
         ),
       );

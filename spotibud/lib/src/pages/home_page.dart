@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:spotibud/pages/cubit/topOfSongs/topOfSongs_cubit.dart';
-import 'package:spotibud/src/objects/topOfArtists.dart';
-import 'dart:convert' as convert;
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:spotibud/src/objects/topOfArtists.dart';
-import 'package:spotibud/pages/cubit/topOfArtists/topOfArtists_cubit.dart';
-import 'package:spotibud/src/requests/requests.dart';
-import 'package:spotibud/pages/loading_page.dart';
+import 'package:spotibud/src/pages/cubit/topOfArtists/topOfArtists_cubit.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:spotibud/src/widgets/topOfArtists_cards/topOfArtists_widget.dart';
 
@@ -16,24 +8,14 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-//  _HomePageState createState() => _HomePageState();
-//}
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => topOfArtistsCubit(),
       child: const _HomePageState(),
     );
   }
-
-  /*@override
-  Widget getSongs(BuildContext context){
-    return BlocProvider(create: (_) => topOfSongsCubit(),
-    child: const _HomePageState(),
-    );
-  }*/
 }
 
-//class _HomePageState extends State<HomePage> {
 class _HomePageState extends StatelessWidget {
   const _HomePageState({Key? key}) : super(key: key);
 
@@ -56,8 +38,9 @@ class _HomePageState extends StatelessWidget {
           child: Scaffold(
             appBar: getAppBar(),
             body: getBody(state),
+            backgroundColor: Colors.black,
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.black87,
           onRefresh: () =>
               context.read<topOfArtistsCubit>().reloadtopOfArtists(),
         );
@@ -72,7 +55,7 @@ class _HomePageState extends StatelessWidget {
       backgroundColor: Colors.black,
       elevation: 0,
       title: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

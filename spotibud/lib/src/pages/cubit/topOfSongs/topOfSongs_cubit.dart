@@ -14,9 +14,8 @@ class topOfSongsCubit extends Cubit<TopOfSongsState> {
 
   Future<void> loadtopOfSongs() async {
     try {
-      emit(topOfSongsLoadedState(await getUserTopSongs(
-          (await UserSecureStorage
-              .getTokenFromStorage())!))); // request top songs
+      emit(topOfSongsLoadedState(await getUserTopSongs((await UserSecureStorage
+          .getTokenFromStorage())!))); // request top songs
       print('Top loaded');
     } catch (e) {
       emit(topOfSongsErrorState('Failed Top Load'));

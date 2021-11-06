@@ -5,9 +5,10 @@ import 'package:http/http.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:spotibud/pages/home_page.dart';
-import 'package:spotibud/src/objects/topOfArtists.dart' as artists;
-import 'package:spotibud/src/objects/topOfSongs.dart' as songs;
+import 'package:spotibud/src/pages/home_page.dart';
+import 'package:spotibud/src/models/top_of_artists.dart' as artists;
+import 'package:spotibud/src/models/top_of_songs.dart' as songs;
+import 'package:spotibud/src/models/followed_artists.dart' as follows;
 import 'package:spotibud/src/auth.dart' as auth;
 
 String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
@@ -211,5 +212,117 @@ Future<List<dynamic>> getUserTopSongs(dynamic token) async {
   }
 }
 
+//followed artists
+Future<List<dynamic>> getFollowedArtists(dynamic token) async {
+  final Map<String, String> getFollowedArtistsbody = {
+    'type': 'artist',
+    'limit': '50',
+  };
 
-//Top 10
+  final Map<String, String> getFollowedArtistsHeaders = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $token",
+  };
+
+  final Response getFollowedArtistsResponse = await http.get(
+      Uri.https('api.spotify.com', '/v1/me/following', getFollowedArtistsbody),
+      headers: getFollowedArtistsHeaders);
+
+  if (getFollowedArtistsResponse.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    final FollowedArtists_info = convert
+        .jsonDecode(getFollowedArtistsResponse.body) as Map<String, dynamic>;
+    List<dynamic> myList = [];
+    List<dynamic> idList = [];
+    var numberOfArtists = FollowedArtists_info['artists']['total'] as int;
+    if (numberOfArtists > 50) numberOfArtists = 50;
+    for (int i = 0; i < numberOfArtists; i++) {
+      idList.add(FollowedArtists_info['artists']['items'][i]['id']);
+      //  myList.add(follows.lastNews
+      //      .fromJson(FollowedArtists_info['artists']["items"][i]));
+    }
+    print(idList);
+    return getArtistLastRelease(token, idList);
+  } else {
+    // If the server did not return a 200 CREATED response,
+    var statusCode = getFollowedArtistsResponse.statusCode;
+    throw Exception(
+        'Failed to get Arists USER response. Status code = $statusCode');
+  }
+}
+
+//Last releases
+Future<List<dynamic>> getArtistLastRelease(
+    dynamic token, List<dynamic> idList) async {
+  List<dynamic> newList = [];
+  for (int i = 0; i < idList.length; i++) {
+    final Map<String, String> getArtistSingleBody = {
+      'include_groups': 'single',
+      'limit': '1',
+      'market': 'RU',
+    };
+
+    final Map<String, String> getArtistAlbumBody = {
+      'include_groups': 'album',
+      'limit': '1',
+      'market': 'RU',
+    };
+
+    final Map<String, String> getArtistSingleHeaders = {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token",
+    };
+
+    final Map<String, String> getArtistAlbumHeaders = {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token",
+    };
+
+    final Response getArtistSingleResponse = await http.get(
+        Uri.https('api.spotify.com', '/v1/artists/${idList[i]}/albums',
+            getArtistSingleBody),
+        headers: getArtistSingleHeaders);
+    final lastSingle_info = convert.jsonDecode(getArtistSingleResponse.body)
+        as Map<String, dynamic>;
+
+    final Response getArtistAlbumResponse = await http.get(
+        Uri.https('api.spotify.com', '/v1/artists/${idList[i]}/albums',
+            getArtistAlbumBody),
+        headers: getArtistAlbumHeaders);
+    final lastAlbum_info =
+        convert.jsonDecode(getArtistAlbumResponse.body) as Map<String, dynamic>;
+
+    if (getArtistSingleResponse.statusCode == 200 ||
+        getArtistAlbumResponse.statusCode == 200) {
+      /*final lastAlbum_info = convert.jsonDecode(getArtistAlbumResponse.body)
+          as Map<String, dynamic>;
+      final lastSingle_info = convert.jsonDecode(getArtistSingleResponse.body)
+          as Map<String, dynamic>;*/
+      /*print(lastAlbum_info);*/
+      var single = DateTime.parse(lastSingle_info['items'][0]['release_date']);
+      var album = DateTime.now();
+      if ((lastAlbum_info['total'] as int) != 0) {
+        album = DateTime.parse(lastAlbum_info['items'][0]['release_date']);
+      } else {
+        album = DateTime.utc(1900, 1, 1);
+      }
+      //print(lastSingle_info['items'][0]['type']);
+      if (single.isAfter(album) == true) {
+        newList[i] = follows.lastNews.fromJson(lastSingle_info['items'][0]);
+      } else {
+        newList[i] = follows.lastNews.fromJson(lastAlbum_info['items'][0]);
+      }
+      print(newList[i]);
+      //return newList;
+    } else {
+      // If the server did not return a 200 CREATED response,
+      var statusCode = getArtistSingleResponse.statusCode;
+      throw Exception(
+          'Failed to get tracks USER response. Status code = $statusCode');
+    }
+  }
+  return newList;
+}

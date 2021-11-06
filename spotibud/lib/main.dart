@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spotibud/pages/loading_page.dart';
-import 'package:spotibud/pages/root_app.dart';
+import 'package:spotibud/src/pages/loading_page.dart';
+import 'package:spotibud/src/pages/root_app.dart';
 
 /*void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,

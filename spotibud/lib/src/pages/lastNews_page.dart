@@ -1,56 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:spotibud/src/objects/topOfSongs.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
-import 'package:spotibud/src/widgets/topOfSongs/topOfSongs_widget.dart';
-import 'dart:convert' as convert;
+import 'package:spotibud/src/widgets/lastNews_cards/lastNews_widget.dart';
 
-import '../pages/cubit/topOfSongs/topOfSongs_cubit.dart';
+import '../pages/cubit/lastNews/lastNews_cubit.dart';
 
-class SongsPage extends StatelessWidget {
-  const SongsPage({Key? key}) : super(key: key);
+class LastNewsPage extends StatelessWidget {
+  const LastNewsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => topOfSongsCubit(),
-      child: const _TopSongsPage(),
+      create: (_) => lastNewsCubit(),
+      child: const _LastNewsState(),
     );
   }
-
-  /*@override
-  Widget getSongs(BuildContext context){
-    return BlocProvider(create: (_) => topOfSongsCubit(),
-      child: const _TopSongsPage(),
-    );
-  }*/
-
 }
 
-class _TopSongsPage extends StatelessWidget {
-  const _TopSongsPage({Key? key}) : super(key: key);
+class _LastNewsState extends StatelessWidget {
+  const _LastNewsState({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<topOfSongsCubit, TopOfSongsState>(
-        builder: (context, state) {
-      if (state is topOfSongsInitial) {
-        context.read<topOfSongsCubit>().informInitial();
-        context.read<topOfSongsCubit>().loadtopOfSongs();
+    return BlocBuilder<lastNewsCubit, lastNewsState>(builder: (context, state) {
+      if (state is lastNewsInitial) {
+        context.read<lastNewsCubit>().informInitial();
+        context
+            .read<lastNewsCubit>()
+            .loadlastNews(); // run Circular progress bar while news is loading
         return const Center(
           child: CircularProgressIndicator(backgroundColor: Colors.amber),
         );
       }
 
-      if (state is topOfSongsLoadedState) {
+      if (state is lastNewsLoadedState) {
         return RefreshIndicator(
           child: Scaffold(
             appBar: getAppBar(),
             body: getBody(state),
+            backgroundColor: Colors.black,
           ),
-          backgroundColor: Colors.blue,
-          onRefresh: () => context.read<topOfSongsCubit>().reloadtopOfSongs(),
+          backgroundColor: Colors.black87,
+          onRefresh: () => context.read<lastNewsCubit>().reloadlastNews(),
         );
       }
       return Container();
@@ -63,7 +54,7 @@ class _TopSongsPage extends StatelessWidget {
       backgroundColor: Colors.black,
       elevation: 0,
       title: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -86,12 +77,12 @@ class _TopSongsPage extends StatelessWidget {
     //var screenHeight = MediaQuery.of().size.height;
     //var screenWidth = MediaQuery.of().size.width;
     return ListView.builder(
-      itemCount: state.topOfSongsList.length,
+      itemCount: state.lastNewsList.length,
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () =>
-              launchUniversalLink(state.topOfSongsList[index].external_urls),
-          child: topOfSongsWidget(state.topOfSongsList[index], context, state),
+              launchUniversalLink(state.lastNewsList[index].external_urls),
+          child: lastNewsWidget(state.lastNewsList[index], context, state),
         );
       },
     );

@@ -85,6 +85,10 @@ fonts:
   - family: Merriweather
     fonts:
       - asset: assets\fonts\Merriweather-BoldItalic.ttf
+  - family: Inter
+    fonts:
+      - asset: assets\fonts\Inter-Regular.otf
+  
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

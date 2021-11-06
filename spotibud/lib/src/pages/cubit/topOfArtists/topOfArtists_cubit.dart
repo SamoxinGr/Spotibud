@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:spotibud/src/requests/requests.dart';
-import 'package:spotibud/pages/loading_page.dart';
+import 'package:spotibud/src/pages/loading_page.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
 
 part 'topOfArtists_state.dart';

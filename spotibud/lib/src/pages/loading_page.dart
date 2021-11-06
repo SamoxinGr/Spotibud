@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:spotibud/pages/root_app.dart';
+import 'package:spotibud/src/pages/root_app.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     String loginUrl =
-        "$AUTHORIZE?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=user-read-private%20user-read-email%20user-top-read";
+        "$AUTHORIZE?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=user-read-private%20user-read-email%20user-top-read%20user-follow-read";
 
     return WebviewScaffold(
         url: loginUrl,

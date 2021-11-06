@@ -15,6 +15,4 @@ class topOfSongsErrorState extends TopOfSongsState {
   final String errorMessage;
 
   topOfSongsErrorState(this.errorMessage);
-
-
 }

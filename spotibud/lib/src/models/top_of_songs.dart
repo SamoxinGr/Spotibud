@@ -6,6 +6,7 @@ class topOfSongs {
   var external_urls;
   String? name;
   String? type;
+  var images;
 
   topOfSongs({
     required this.id,
@@ -13,6 +14,7 @@ class topOfSongs {
     required this.external_urls,
     required this.name,
     required this.type,
+    required this.images,
   });
 
   factory topOfSongs.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class topOfSongs {
       external_urls: json['external_urls']['spotify'],
       name: json['name'],
       type: json['type'],
+      images: json['album']['images'][0]['url'],
     );
   }
 }
