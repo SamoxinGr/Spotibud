@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:spotibud/src/pages/loading_page.dart';
 import 'package:spotibud/src/pages/root_app.dart';
@@ -7,6 +9,7 @@ import 'package:spotibud/src/pages/root_app.dart';
       home: LoginScreen(),
     ));
 */
+
 void main() {
   runApp(const MyApp());
 }
@@ -26,3 +29,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

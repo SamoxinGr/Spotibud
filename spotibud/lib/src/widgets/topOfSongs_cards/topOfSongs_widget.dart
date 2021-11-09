@@ -4,6 +4,7 @@ import 'package:spotibud/src/models/top_of_songs.dart';
 
 Widget topOfSongsWidget(
     topOfSongs item, BuildContext context, topOfSongsLoadedState state) {
+  final double width = MediaQuery.of(context).size.width;
   return Card(
     color: Colors.grey[900],
     margin: EdgeInsets.all(10),
@@ -15,7 +16,7 @@ Widget topOfSongsWidget(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTile(
-          minLeadingWidth: 60,
+          minLeadingWidth: width / 10,
           minVerticalPadding: 15,
           contentPadding: EdgeInsets.only(left: 15, bottom: 5),
           leading: Image(

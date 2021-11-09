@@ -4,6 +4,8 @@ import 'package:spotibud/src/pages/top_page.dart';
 import 'package:spotibud/src/pages/lastNews_page.dart';
 import 'home_page.dart';
 import 'lastNews_page.dart';
+import 'loadingScreenState.dart';
+
 
 class RootApp extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class RootApp extends StatefulWidget {
 }
 
 class _RootAppState extends State<RootApp> {
+  bool loading = false;
   int index = 0;
   final pages = [
     HomePage(),
@@ -86,14 +89,15 @@ class _RootAppState extends State<RootApp> {
   }*/
 
   @override
-  Widget getPage(BuildContext context) => Scaffold(
+  Widget getPage(BuildContext context){
+    return Scaffold(
         body: pages[index],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.black,
           unselectedItemColor: Colors.white.withOpacity(0.7),
           selectedItemColor: Colors.white,
           currentIndex: index,
-          onTap: (int index) => setState(() => this.index = index),
+          onTap: (int index) => setState(()=> this.index = index),
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -107,5 +111,5 @@ class _RootAppState extends State<RootApp> {
                 icon: Icon(Icons.new_releases), label: "News")
           ],
         ),
-      );
+      );}
 }

@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           title: const Text("Login to Spotify..."),
           backgroundColor: Colors.black,
-          leading: Image.asset("assets/images/image.jpeg"),
+          leading: Image.asset("assets/images/logo.jpeg"),
         ));
   }
 }

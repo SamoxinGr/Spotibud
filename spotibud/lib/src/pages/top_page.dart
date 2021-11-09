@@ -32,6 +32,7 @@ class _TopSongsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<topOfSongsCubit, TopOfSongsState>(
         builder: (context, state) {
       if (state is topOfSongsInitial) {

@@ -4,6 +4,8 @@ import 'package:spotibud/src/models/top_of_artists.dart';
 
 Widget topOfArtistsWidget(
     topOfArtists item, BuildContext context, topOfArtistsLoadedState state) {
+  final double width = MediaQuery.of(context).size.width;
+  final double height = MediaQuery.of(context).size.height;
   return Card(
     color: Colors.grey[900],
     margin: EdgeInsets.all(10),
@@ -16,7 +18,7 @@ Widget topOfArtistsWidget(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTile(
-          minLeadingWidth: 60,
+          minLeadingWidth: width / 10,
           minVerticalPadding: 20,
           leading: CircleAvatar(
               radius: 30, backgroundImage: NetworkImage(item.images)),
