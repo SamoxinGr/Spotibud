@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotibud/src/pages/cubit/topOfArtists/topOfArtists_cubit.dart';
@@ -19,15 +21,20 @@ class HomePage extends StatelessWidget {
 class _HomePageState extends StatelessWidget {
   const _HomePageState({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
+
+
     return BlocBuilder<topOfArtistsCubit, topOfArtistsState>(
         builder: (context, state) {
       if (state is topOfArtistsInitial) {
+        String term = 'short_term';
         context.read<topOfArtistsCubit>().informInitial();
         context
             .read<topOfArtistsCubit>()
-            .loadtopOfArtists(); // run Circular progress bar while news is loading
+            .loadtopOfArtists(term); // run Circular progress bar while news is loading
         return const Center(
           child: CircularProgressIndicator(backgroundColor: Colors.amber),
         );
@@ -36,7 +43,7 @@ class _HomePageState extends StatelessWidget {
       if (state is topOfArtistsLoadedState) {
         return RefreshIndicator(
           child: Scaffold(
-            appBar: getAppBar(),
+            appBar: getAppBar(context),
             body: getBody(state),
             backgroundColor: Colors.black,
           ),
@@ -49,24 +56,42 @@ class _HomePageState extends StatelessWidget {
     });
   }
 
-  PreferredSizeWidget getAppBar() {
+  PreferredSizeWidget getAppBar(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    String term = 'short_term';
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.black,
       elevation: 0,
+      toolbarHeight: height / 10,
       title: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 20),
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 40,),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              "Settings",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            Icon(Icons.list)
+            PopupMenuButton(
+                tooltip: "Options",
+                elevation: 25,
+                icon: Icon(Icons.more_horiz),
+                color: Colors.grey[850],
+                shape: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade900,
+                      width: 1,
+                    )
+                ),
+                itemBuilder: (_) => const<PopupMenuItem<String>>[
+                  PopupMenuItem<String>(
+                      child: Text('All time', style: TextStyle(color: Colors.white60, fontFamily: "Inter"),), value: 'long_term'),
+                  PopupMenuItem<String>(
+                      child: Text('Half-year', style: TextStyle(color: Colors.white60, fontFamily: "Inter")), value: 'medium_term'),
+                  PopupMenuItem<String>(
+                      child: Text('Last month', style: TextStyle(color: Colors.white60, fontFamily: "Inter")), value: 'short_term'),
+            ],
+            onSelected: (value) {
+              term = value as String;
+              context.read<topOfArtistsCubit>().loadtopOfArtists(term);
+            }),
             //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
           ],
         ),

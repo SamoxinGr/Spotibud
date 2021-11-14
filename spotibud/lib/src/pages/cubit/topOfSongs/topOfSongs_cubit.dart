@@ -12,10 +12,10 @@ class topOfSongsCubit extends Cubit<TopOfSongsState> {
     print('topOfSongsPage loading');
   }
 
-  Future<void> loadtopOfSongs() async {
+  Future<void> loadtopOfSongs(String term) async {
     try {
       emit(topOfSongsLoadedState(await getUserTopSongs((await UserSecureStorage
-          .getTokenFromStorage())!))); // request top songs
+          .getTokenFromStorage())!, term))); // request top songs
       print('Top loaded');
     } catch (e) {
       emit(topOfSongsErrorState('Failed Top Load'));

@@ -139,9 +139,9 @@ Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
 }
 
 // ТОП 10 artists
-Future<List<dynamic>> getUserTopArtists(dynamic token) async {
+Future<List<dynamic>> getUserTopArtists(dynamic token, String term) async {
   final Map<String, String> getUserArtistbody = {
-    'time_range': 'short_term',
+    'time_range': '$term',
     'limit': '10',
     'offset': '0',
   };
@@ -177,9 +177,9 @@ Future<List<dynamic>> getUserTopArtists(dynamic token) async {
 }
 
 //ТОП 10 tracks
-Future<List<dynamic>> getUserTopSongs(dynamic token) async {
+Future<List<dynamic>> getUserTopSongs(dynamic token, String term) async {
   final Map<String, String> getUserSongBody = {
-    'time_range': 'short_term',
+    'time_range': '$term',
     'limit': '10',
     'offset': '0',
   };
