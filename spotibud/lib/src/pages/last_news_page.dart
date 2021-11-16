@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
-import 'package:spotibud/src/widgets/lastNews_cards/lastNews_widget.dart';
+import 'package:spotibud/src/widgets/lastNews_cards/last_news_widget.dart';
 
-import '../pages/cubit/lastNews/lastNews_cubit.dart';
+import '../pages/cubit/lastNews/last_news_cubit.dart';
 
 class LastNewsPage extends StatelessWidget {
   const LastNewsPage({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class LastNewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => lastNewsCubit(),
+      create: (_) => LastNewsCubit(),
       child: const _LastNewsState(),
     );
   }
@@ -22,33 +22,33 @@ class _LastNewsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<lastNewsCubit, lastNewsState>(builder: (context, state) {
-      if (state is lastNewsInitial) {
-        context.read<lastNewsCubit>().informInitial();
+    return BlocBuilder<LastNewsCubit, LastNewsState>(builder: (context, state) {
+      if (state is LastNewsInitial) {
+        context.read<LastNewsCubit>().informInitial();
         context
-            .read<lastNewsCubit>()
+            .read<LastNewsCubit>()
             .loadlastNews(); // run Circular progress bar while news is loading
         return const Center(
           child: CircularProgressIndicator(backgroundColor: Colors.amber),
         );
       }
 
-      if (state is lastNewsLoadedState) {
+      if (state is LastNewsLoadedState) {
         return RefreshIndicator(
           child: Scaffold(
-            appBar: getAppBar(),
-            body: getBody(state),
+            appBar: GetAppBar(),
+            body: GetBody(state),
             backgroundColor: Colors.black,
           ),
           backgroundColor: Colors.black87,
-          onRefresh: () => context.read<lastNewsCubit>().reloadlastNews(),
+          onRefresh: () => context.read<LastNewsCubit>().reloadlastNews(),
         );
       }
       return Container();
     });
   }
 
-  PreferredSizeWidget getAppBar() {
+  PreferredSizeWidget GetAppBar() {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.black,
@@ -73,7 +73,7 @@ class _LastNewsState extends StatelessWidget {
     );
   }
 
-  Widget getBody(state) {
+  Widget GetBody(state) {
     //var screenHeight = MediaQuery.of().size.height;
     //var screenWidth = MediaQuery.of().size.width;
     return ListView.builder(
@@ -82,7 +82,7 @@ class _LastNewsState extends StatelessWidget {
         return InkWell(
           onTap: () =>
               launchUniversalLink(state.lastNewsList[index].external_urls),
-          child: lastNewsWidget(state.lastNewsList[index], context, state),
+          child: LastNewsWidget(state.lastNewsList[index], context, state),
         );
       },
     );

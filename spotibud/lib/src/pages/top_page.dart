@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:spotibud/src/models/top_of_songs.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
-import 'package:spotibud/src/widgets/topOfSongs_cards/topOfSongs_widget.dart';
+import 'package:spotibud/src/widgets/topOfSongs_cards/top_of_songs_widget.dart';
 import 'dart:convert' as convert;
 
-import '../pages/cubit/topOfSongs/topOfSongs_cubit.dart';
+import '../pages/cubit/topOfSongs/top_of_songs_cubit.dart';
 
 class SongsPage extends StatelessWidget {
   const SongsPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class SongsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => topOfSongsCubit(),
+      create: (_) => TopOfSongsCubit(),
       child: const _TopSongsPage(),
     );
   }
@@ -35,17 +35,17 @@ class _TopSongsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String term = 'short_term';
 
-    return BlocBuilder<topOfSongsCubit, TopOfSongsState>(
+    return BlocBuilder<TopOfSongsCubit, TopOfSongsState>(
         builder: (context, state) {
-      if (state is topOfSongsInitial) {
-        context.read<topOfSongsCubit>().informInitial();
-        context.read<topOfSongsCubit>().loadtopOfSongs(term);
+      if (state is TopOfSongsInitial) {
+        context.read<TopOfSongsCubit>().informInitial();
+        context.read<TopOfSongsCubit>().loadtopOfSongs(term);
         return const Center(
           child: CircularProgressIndicator(backgroundColor: Colors.amber),
         );
       }
 
-      if (state is topOfSongsLoadedState) {
+      if (state is TopOfSongsLoadedState) {
         return RefreshIndicator(
           child: Scaffold(
             backgroundColor: Colors.black,
@@ -53,7 +53,7 @@ class _TopSongsPage extends StatelessWidget {
             body: getBody(state),
           ),
           backgroundColor: Colors.black87,
-          onRefresh: () => context.read<topOfSongsCubit>().reloadtopOfSongs(),
+          onRefresh: () => context.read<TopOfSongsCubit>().reloadtopOfSongs(),
         );
       }
       return Container();
@@ -94,7 +94,7 @@ class _TopSongsPage extends StatelessWidget {
                 ],
                 onSelected: (value) {
                   term = value as String;
-                  context.read<topOfSongsCubit>().loadtopOfSongs(term);
+                  context.read<TopOfSongsCubit>().loadtopOfSongs(term);
                 }),
             //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
           ],
@@ -112,7 +112,7 @@ class _TopSongsPage extends StatelessWidget {
         return InkWell(
           onTap: () =>
               launchUniversalLink(state.topOfSongsList[index].external_urls),
-          child: topOfSongsWidget(state.topOfSongsList[index], context, state),
+          child: TopOfSongsWidget(state.topOfSongsList[index], context, state),
         );
       },
     );

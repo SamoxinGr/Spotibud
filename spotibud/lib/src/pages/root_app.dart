@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spotibud/src/pages/top_page.dart';
-import 'package:spotibud/src/pages/lastNews_page.dart';
+import 'package:spotibud/src/pages/last_news_page.dart';
 import 'home_page.dart';
-import 'lastNews_page.dart';
-import 'loadingScreenState.dart';
+import 'last_news_page.dart';
+import 'loading_screen_state.dart';
 
 
 class RootApp extends StatefulWidget {
@@ -25,7 +25,7 @@ class _RootAppState extends State<RootApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar: getPage(context),
+      bottomNavigationBar: GetPage(context),
       //body: getBody(),
     );
   }
@@ -89,7 +89,7 @@ class _RootAppState extends State<RootApp> {
   }*/
 
   @override
-  Widget getPage(BuildContext context){
+  Widget GetPage(BuildContext context){
     return Scaffold(
         body: pages[index],
         bottomNavigationBar: BottomNavigationBar(

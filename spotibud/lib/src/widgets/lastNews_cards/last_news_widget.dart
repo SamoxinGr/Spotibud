@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:spotibud/src/pages/cubit/topOfSongs/topOfSongs_cubit.dart';
-import 'package:spotibud/src/models/top_of_songs.dart';
+import 'package:spotibud/src/pages/cubit/lastNews/last_news_cubit.dart';
+import 'package:spotibud/src/models/followed_artists.dart';
 
-Widget topOfSongsWidget(
-    topOfSongs item, BuildContext context, topOfSongsLoadedState state) {
+Widget LastNewsWidget(
+    lastNews item, BuildContext context, LastNewsLoadedState state) {
   final double width = MediaQuery.of(context).size.width;
+  final double height = MediaQuery.of(context).size.height;
   return Card(
     color: Colors.grey[900],
     margin: EdgeInsets.all(10),
     elevation: 7,
     shape: RoundedRectangleBorder(
+        //side: BorderSide(color: Colors.grey, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10))),
     shadowColor: Colors.grey[700],
     child: Column(
@@ -17,8 +19,7 @@ Widget topOfSongsWidget(
       children: <Widget>[
         ListTile(
           minLeadingWidth: width / 10,
-          minVerticalPadding: 15,
-          contentPadding: EdgeInsets.only(left: 15, bottom: 5),
+          minVerticalPadding: 20,
           leading: Image(
             image: NetworkImage(item.images),
           ),

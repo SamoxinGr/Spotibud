@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spotibud/src/pages/cubit/lastNews/lastNews_cubit.dart';
-import 'package:spotibud/src/models/followed_artists.dart';
+import 'package:spotibud/src/pages/cubit/topOfArtists/top_of_artists_cubit.dart';
+import 'package:spotibud/src/models/top_of_artists.dart';
 
-Widget lastNewsWidget(
-    lastNews item, BuildContext context, lastNewsLoadedState state) {
+Widget TopOfArtistsWidget(
+    topOfArtists item, BuildContext context, TopOfArtistsLoadedState state) {
   final double width = MediaQuery.of(context).size.width;
-  final double height = MediaQuery.of(context).size.height;
   return Card(
     color: Colors.grey[900],
     margin: EdgeInsets.all(10),
@@ -20,9 +19,8 @@ Widget lastNewsWidget(
         ListTile(
           minLeadingWidth: width / 10,
           minVerticalPadding: 20,
-          leading: Image(
-            image: NetworkImage(item.images),
-          ),
+          leading: CircleAvatar(
+              radius: 30, backgroundImage: NetworkImage(item.images)),
           title: Text(
             "${item.name}",
             style: TextStyle(
@@ -30,14 +28,6 @@ Widget lastNewsWidget(
               fontFamily: "Inter",
               color: Colors.white70,
             ),
-          ),
-          subtitle: Text(
-            "${item.author}",
-            style: TextStyle(
-                color: Colors.white70,
-                fontFamily: "Inter",
-                fontSize: 17,
-                fontWeight: FontWeight.w400),
           ),
         ),
       ],

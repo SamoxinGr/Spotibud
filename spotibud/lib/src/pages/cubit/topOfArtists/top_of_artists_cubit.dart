@@ -4,10 +4,10 @@ import 'package:spotibud/src/requests/requests.dart';
 import 'package:spotibud/src/pages/loading_page.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
 
-part 'topOfArtists_state.dart';
+part 'top_of_artists_state.dart';
 
-class topOfArtistsCubit extends Cubit<topOfArtistsState> {
-  topOfArtistsCubit() : super(topOfArtistsInitial());
+class TopOfArtistsCubit extends Cubit<TopOfArtistsState> {
+  TopOfArtistsCubit() : super(TopOfArtistsInitial());
 
   Future<void> informInitial() async {
     print('topOfArtistPage loading');
@@ -15,16 +15,16 @@ class topOfArtistsCubit extends Cubit<topOfArtistsState> {
 
   Future<void> loadtopOfArtists(String term) async {
     try {
-      emit(topOfArtistsLoadedState(await getUserTopArtists(
+      emit(TopOfArtistsLoadedState(await getUserTopArtists(
           (await UserSecureStorage
               .getTokenFromStorage())!, term))); // request top artists
       print('Top loaded');
     } catch (e) {
-      emit(topOfArtistsErrorState('Failed Top Load'));
+      emit(TopOfArtistsErrorState('Failed Top Load'));
     }
   }
 
   Future<void> reloadtopOfArtists() async {
-    emit(topOfArtistsInitial());
+    emit(TopOfArtistsInitial());
   }
 }

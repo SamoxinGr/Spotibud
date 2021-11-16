@@ -3,10 +3,10 @@ import 'package:meta/meta.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
 
-part 'lastNews_state.dart';
+part 'last_news_state.dart';
 
-class lastNewsCubit extends Cubit<lastNewsState> {
-  lastNewsCubit() : super(lastNewsInitial());
+class LastNewsCubit extends Cubit<LastNewsState> {
+  LastNewsCubit() : super(LastNewsInitial());
 
   Future<void> informInitial() async {
     print('lastNewsPage loading');
@@ -14,15 +14,15 @@ class lastNewsCubit extends Cubit<lastNewsState> {
 
   Future<void> loadlastNews() async {
     try {
-      emit(lastNewsLoadedState(await getFollowedArtists((await UserSecureStorage
+      emit(LastNewsLoadedState(await getFollowedArtists((await UserSecureStorage
           .getTokenFromStorage())!))); // request top songs
       print('Top loaded');
     } catch (e) {
-      emit(lastNewsErrorState('Failed Top Load'));
+      emit(LastNewsErrorState('Failed Top Load'));
     }
   }
 
   Future<void> reloadlastNews() async {
-    emit(lastNewsInitial());
+    emit(LastNewsInitial());
   }
 }
