@@ -87,11 +87,12 @@ Future<List<dynamic>> getUser(dynamic token) async {
       await http.get(Uri.https("api.spotify.com", "/v1/me"), headers: headers);
   if (getUserResponse.statusCode == 200) {
     // If the server did return a 200 CREATED response,
-    List<dynamic> myList = [];
+    List<dynamic> userList = [];
     final user_info =
         await convert.jsonDecode(getUserResponse.body) as Map<String, dynamic>;
-    myList.add(user.UserInfo.fromJson(user_info));
-    return myList;
+    userList.add(user.UserInfo.fromJson(user_info));
+    print(userList);
+    return userList;
   } else {
     // If the server did not return a 200 CREATED response,
     var statusCode = getUserResponse.statusCode;
@@ -307,4 +308,54 @@ Future<List<dynamic>> getArtistLastRelease(
     }
   }
   return newList;
+}
+
+Future<List<dynamic>> getUserArtist(dynamic token) async {
+  final Map<String, String> getUserArtistbody = {
+    'time_range': 'long_term',
+    'limit': '1',
+    'offset': '0',
+  };
+
+  final Map<String, String> getUserAristHeaders = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $token",
+  };
+  final Response getUserTopArtistResponse = await http.get(
+      Uri.https('api.spotify.com', '/v1/me/top/artists', getUserArtistbody),
+      headers: getUserAristHeaders);
+  print(getUserTopArtistResponse.statusCode);
+  final artists_info = convert.jsonDecode(getUserTopArtistResponse.body)
+  as Map<String, dynamic>;
+  List<dynamic> artistList = [];
+  artistList.add(artists.topOfArtists.fromJson(artists_info['items'][0]));
+  print(artistList);
+  return artistList;
+}
+
+Future<List<dynamic>> getUserSong(dynamic token) async {
+  final Map<String, String> getUserSongBody = {
+    'time_range': 'long_term',
+    'limit': '1',
+    'offset': '0',
+  };
+
+  final Map<String, String> getUserSongHeaders = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $token",
+  };
+
+
+  final Response getUserTopSongsResponse = await http.get(
+      Uri.https('api.spotify.com', '/v1/me/top/tracks', getUserSongBody),
+      headers: getUserSongHeaders);
+  final songs_info = convert.jsonDecode(getUserTopSongsResponse.body)
+  as Map<String, dynamic>;
+  print(getUserTopSongsResponse.statusCode);
+  List<dynamic> songList = [];
+  songList.add(songs.topOfSongs.fromJson(songs_info['items'][0]));
+  print(songList);
+  return songList;
 }

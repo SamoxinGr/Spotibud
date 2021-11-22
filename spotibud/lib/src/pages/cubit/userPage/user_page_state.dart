@@ -6,9 +6,11 @@ abstract class UserState {} // abstract states class
 class UserInitial extends UserState {}
 
 class UserLoadedState extends UserState {
-  final List UserList;
+  final List userList;
+  final List artistList;
+  final List songList;
 
-  UserLoadedState(this.UserList);
+  UserLoadedState(this.userList, this.artistList, this.songList);
 }
 
 class UserErrorState extends UserState {

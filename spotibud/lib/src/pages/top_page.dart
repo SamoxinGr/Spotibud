@@ -40,8 +40,11 @@ class _TopSongsPage extends StatelessWidget {
       if (state is TopOfSongsInitial) {
         context.read<TopOfSongsCubit>().informInitial();
         context.read<TopOfSongsCubit>().loadtopOfSongs(term);
-        return const Center(
-          child: CircularProgressIndicator(backgroundColor: Colors.amber),
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: const Center(
+            child: CircularProgressIndicator(backgroundColor: Colors.amber),
+          ),
         );
       }
 

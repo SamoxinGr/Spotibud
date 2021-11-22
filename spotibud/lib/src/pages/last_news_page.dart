@@ -28,8 +28,11 @@ class _LastNewsState extends StatelessWidget {
         context
             .read<LastNewsCubit>()
             .loadlastNews(); // run Circular progress bar while news is loading
-        return const Center(
-          child: CircularProgressIndicator(backgroundColor: Colors.amber),
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: const Center(
+            child: CircularProgressIndicator(backgroundColor: Colors.amber),
+          ),
         );
       }
 

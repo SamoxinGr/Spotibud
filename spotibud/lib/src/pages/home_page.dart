@@ -28,8 +28,11 @@ class _HomePageState extends StatelessWidget {
         context.read<TopOfArtistsCubit>().informInitial();
         context.read<TopOfArtistsCubit>().loadtopOfArtists(
             term); // run Circular progress bar while news is loading
-        return const Center(
-          child: CircularProgressIndicator(backgroundColor: Colors.amber),
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: const Center(
+            child: CircularProgressIndicator(backgroundColor: Colors.amber),
+          ),
         );
       }
 

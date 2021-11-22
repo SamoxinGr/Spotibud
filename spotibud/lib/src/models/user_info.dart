@@ -5,6 +5,7 @@ class UserInfo {
   String? image;
   String? country;
 
+
   UserInfo({
     required this.name,
     required this.external_urls,

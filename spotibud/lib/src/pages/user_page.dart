@@ -30,8 +30,11 @@ class _UserState extends StatelessWidget {
         context
             .read<UserCubit>()
             .loadUser(); // run Circular progress bar while news is loading
-        return const Center(
-          child: CircularProgressIndicator(backgroundColor: Colors.greenAccent),
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: const Center(
+            child: CircularProgressIndicator(backgroundColor: Colors.greenAccent),
+          ),
         );
       }
 
@@ -39,7 +42,11 @@ class _UserState extends StatelessWidget {
         return RefreshIndicator(
           child: Scaffold(
             appBar: GetAppBar(context),
-            body: GetBody(state),
+            body: Column(
+              children: [
+                getBody(state),
+              ],
+            ),
             backgroundColor: Colors.black,
           ),
           backgroundColor: Colors.black87,
@@ -70,12 +77,14 @@ class _UserState extends StatelessWidget {
     );
   }
 
-  Widget GetBody(state) {
+  Widget getBody(state) {
     return ListView.builder(
-      itemCount: state.UserList.length,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemCount: state.userList.length,
       itemBuilder: (context, index) {
         return InkWell(
-          child: UserInfoWidget(state.UserList[index], context, state),
+          child: UserInfoWidget(state.userList[index], state.artistList[index], state.songList[index], context, state),
         );
       },
     );

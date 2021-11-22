@@ -13,10 +13,17 @@ class UserCubit extends Cubit<UserState> {
   }
 
   Future<void> loadUser() async {
-    try {
-      emit(UserLoadedState(await getUser((await UserSecureStorage
-          .getTokenFromStorage())!))); // request top songs
+    try {// request top songs
+      final user_info = await getUser(await UserSecureStorage
+          .getTokenFromStorage());
+      final artist = await getUserArtist((await UserSecureStorage.getTokenFromStorage()));
+      final song = await getUserSong((await UserSecureStorage.getTokenFromStorage()));
+      print(user_info);
+      print(artist);
+      print(song);
       print('User loaded');
+    emit(UserLoadedState(user_info, artist, song));
+
     } catch (e) {
       emit(UserErrorState('Failed User Load'));
     }
