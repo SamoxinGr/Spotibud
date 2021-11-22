@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotibud/src/pages/cubit/topOfArtists/top_of_artists_cubit.dart';
@@ -21,20 +19,15 @@ class HomePage extends StatelessWidget {
 class _HomePageState extends StatelessWidget {
   const _HomePageState({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
-
-
     return BlocBuilder<TopOfArtistsCubit, TopOfArtistsState>(
         builder: (context, state) {
       if (state is TopOfArtistsInitial) {
         String term = 'short_term';
         context.read<TopOfArtistsCubit>().informInitial();
-        context
-            .read<TopOfArtistsCubit>()
-            .loadtopOfArtists(term); // run Circular progress bar while news is loading
+        context.read<TopOfArtistsCubit>().loadtopOfArtists(
+            term); // run Circular progress bar while news is loading
         return const Center(
           child: CircularProgressIndicator(backgroundColor: Colors.amber),
         );
@@ -65,7 +58,11 @@ class _HomePageState extends StatelessWidget {
       elevation: 0,
       toolbarHeight: height / 10,
       title: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 40,),
+        padding: const EdgeInsets.only(
+          left: 5,
+          right: 5,
+          top: 40,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -76,23 +73,32 @@ class _HomePageState extends StatelessWidget {
                 color: Colors.grey[850],
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.grey.shade900,
-                      width: 1,
-                    )
-                ),
-                itemBuilder: (_) => const<PopupMenuItem<String>>[
-                  PopupMenuItem<String>(
-                      child: Text('All time', style: TextStyle(color: Colors.white60, fontFamily: "Inter"),), value: 'long_term'),
-                  PopupMenuItem<String>(
-                      child: Text('Half-year', style: TextStyle(color: Colors.white60, fontFamily: "Inter")), value: 'medium_term'),
-                  PopupMenuItem<String>(
-                      child: Text('Last month', style: TextStyle(color: Colors.white60, fontFamily: "Inter")), value: 'short_term'),
-            ],
-            onSelected: (value) {
-              term = value as String;
-              context.read<TopOfArtistsCubit>().loadtopOfArtists(term);
-            }),
-            //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
+                  color: Colors.grey.shade900,
+                  width: 1,
+                )),
+                itemBuilder: (_) => const <PopupMenuItem<String>>[
+                      PopupMenuItem<String>(
+                          child: Text(
+                            'All time',
+                            style: TextStyle(
+                                color: Colors.white60, fontFamily: "Inter"),
+                          ),
+                          value: 'long_term'),
+                      PopupMenuItem<String>(
+                          child: Text('Half-year',
+                              style: TextStyle(
+                                  color: Colors.white60, fontFamily: "Inter")),
+                          value: 'medium_term'),
+                      PopupMenuItem<String>(
+                          child: Text('Last month',
+                              style: TextStyle(
+                                  color: Colors.white60, fontFamily: "Inter")),
+                          value: 'short_term'),
+                    ],
+                onSelected: (value) {
+                  term = value as String;
+                  context.read<TopOfArtistsCubit>().loadtopOfArtists(term);
+                }),
           ],
         ),
       ),
@@ -100,8 +106,6 @@ class _HomePageState extends StatelessWidget {
   }
 
   Widget GetBody(state) {
-    //var screenHeight = MediaQuery.of().size.height;
-    //var screenWidth = MediaQuery.of().size.width;
     return ListView.builder(
       itemCount: state.topOfArtistsList.length,
       itemBuilder: (context, index) {

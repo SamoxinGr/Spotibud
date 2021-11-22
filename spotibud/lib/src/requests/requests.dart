@@ -1,15 +1,12 @@
 import 'dart:convert' as convert;
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
-import 'package:spotibud/src/utils/url_launch.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:spotibud/src/pages/home_page.dart';
 import 'package:spotibud/src/models/top_of_artists.dart' as artists;
 import 'package:spotibud/src/models/top_of_songs.dart' as songs;
 import 'package:spotibud/src/models/followed_artists.dart' as follows;
 import 'package:spotibud/src/auth.dart' as auth;
+import 'package:spotibud/src/models/user_info.dart' as user;
 
 String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
 
@@ -81,22 +78,20 @@ Future<Map<String, dynamic>> getToken(String? code) async {
 }
 
 //User INFO
-Future<Map<String, dynamic>> getUser(dynamic token) async {
+Future<List<dynamic>> getUser(dynamic token) async {
   final Map<String, String> headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     "Authorization": "Bearer $token",
-    "Accept": "*/*",
   };
   final Response getUserResponse =
       await http.get(Uri.https("api.spotify.com", "/v1/me"), headers: headers);
-  print(getUserResponse.request);
   if (getUserResponse.statusCode == 200) {
     // If the server did return a 200 CREATED response,
+    List<dynamic> myList = [];
     final user_info =
         await convert.jsonDecode(getUserResponse.body) as Map<String, dynamic>;
-    print(user_info);
-    print("UUUUPPPPP");
-    return user_info;
+    myList.add(user.UserInfo.fromJson(user_info));
+    return myList;
   } else {
     // If the server did not return a 200 CREATED response,
     var statusCode = getUserResponse.statusCode;
@@ -140,6 +135,7 @@ Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
 
 // ТОП 10 artists
 Future<List<dynamic>> getUserTopArtists(dynamic token, String term) async {
+  getUser(token);
   final Map<String, String> getUserArtistbody = {
     'time_range': '$term',
     'limit': '10',
@@ -155,8 +151,6 @@ Future<List<dynamic>> getUserTopArtists(dynamic token, String term) async {
   final Response getUserTopArtistResponse = await http.get(
       Uri.https('api.spotify.com', '/v1/me/top/artists', getUserArtistbody),
       headers: getUserAristHeaders);
-
-  //print(getUserTopArtistResponse.request);
 
   if (getUserTopArtistResponse.statusCode == 200) {
     List<dynamic> myList = List.filled(10, 0, growable: false);
@@ -233,16 +227,12 @@ Future<List<dynamic>> getFollowedArtists(dynamic token) async {
     // If the server did return a 200 CREATED response,
     final FollowedArtists_info = convert
         .jsonDecode(getFollowedArtistsResponse.body) as Map<String, dynamic>;
-    List<dynamic> myList = [];
-    List<dynamic> idList = [];
+    List<String> idList = [];
     var numberOfArtists = FollowedArtists_info['artists']['total'] as int;
     if (numberOfArtists > 50) numberOfArtists = 50;
     for (int i = 0; i < numberOfArtists; i++) {
       idList.add(FollowedArtists_info['artists']['items'][i]['id']);
-      //  myList.add(follows.lastNews
-      //      .fromJson(FollowedArtists_info['artists']["items"][i]));
     }
-    print(idList);
     return getArtistLastRelease(token, idList);
   } else {
     // If the server did not return a 200 CREATED response,
@@ -254,7 +244,7 @@ Future<List<dynamic>> getFollowedArtists(dynamic token) async {
 
 //Last releases
 Future<List<dynamic>> getArtistLastRelease(
-    dynamic token, List<dynamic> idList) async {
+    dynamic token, List<String> idList) async {
   List<dynamic> newList = [];
   for (int i = 0; i < idList.length; i++) {
     final Map<String, String> getArtistSingleBody = {
