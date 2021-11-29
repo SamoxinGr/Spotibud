@@ -4,8 +4,8 @@ import 'package:spotibud/src/models/top_of_songs.dart';
 import 'package:spotibud/src/pages/cubit/userPage/user_page_cubit.dart';
 import 'package:spotibud/src/models/user_info.dart';
 
-Widget UserInfoWidget(
-    UserInfo item, topOfArtists artists, topOfSongs songs, BuildContext context, UserLoadedState state) {
+Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
+    BuildContext context, UserLoadedState state) {
   final double height = MediaQuery.of(context).size.height;
   return Card(
       color: Colors.grey[900],
@@ -30,11 +30,15 @@ Widget UserInfoWidget(
                   fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
             ),
             Text(
-              '${songs.name}',
+              'Artist - ${artists.name}',
               style: TextStyle(
                   fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
             ),
-
+            Text(
+              'Song - ${songs.name} (${artists.name})',
+              style: TextStyle(
+                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+            ),
           ],
         ),
       ));

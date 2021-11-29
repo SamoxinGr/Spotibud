@@ -6,7 +6,7 @@ abstract class TopOfSongsState {} // abstract states class
 class TopOfSongsInitial extends TopOfSongsState {}
 
 class TopOfSongsLoadedState extends TopOfSongsState {
-  final List topOfSongsList;
+  final List<topOfSongs> topOfSongsList;
 
   TopOfSongsLoadedState(this.topOfSongsList);
 }

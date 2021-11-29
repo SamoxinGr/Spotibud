@@ -20,7 +20,7 @@ Widget TopOfArtistsWidget(
           minLeadingWidth: width / 10,
           minVerticalPadding: 20,
           leading: CircleAvatar(
-              radius: 30, backgroundImage: NetworkImage(item.images)),
+              radius: 30, backgroundImage: NetworkImage("${item.images}")),
           title: Text(
             "${item.name}",
             style: TextStyle(

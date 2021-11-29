@@ -1,19 +1,17 @@
 class topOfArtists {
-  var external_urls;
-  var followers;
-  var genres;
+  String? external_urls;
+  int followers;
   String? href;
   String? id;
-  var images;
+  String? images;
   String? name;
-  var popularity;
+  int popularity;
   String? type;
   String? uri;
 
   topOfArtists({
     required this.external_urls,
     required this.followers,
-    required this.genres,
     required this.href,
     required this.id,
     required this.images,
@@ -27,7 +25,6 @@ class topOfArtists {
     return topOfArtists(
       external_urls: json['external_urls']['spotify'],
       followers: json['followers']['total'],
-      genres: json['genres'],
       href: json['href'],
       id: json['id'],
       images: json['images'][0]['url'],

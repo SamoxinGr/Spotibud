@@ -20,7 +20,7 @@ Widget TopOfSongsWidget(
           minVerticalPadding: 15,
           contentPadding: EdgeInsets.only(left: 15, bottom: 5),
           leading: Image(
-            image: NetworkImage(item.images),
+            image: NetworkImage("${item.images}"),
           ),
           title: Text(
             "${item.name}",

@@ -2,7 +2,7 @@ class lastNews {
   String? author;
   String? name;
   String? external_urls;
-  var images;
+  String? images;
   String? type;
 
   lastNews({

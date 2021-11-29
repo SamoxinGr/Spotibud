@@ -2,11 +2,11 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
-import 'package:spotibud/src/models/top_of_artists.dart' as artists;
-import 'package:spotibud/src/models/top_of_songs.dart' as songs;
-import 'package:spotibud/src/models/followed_artists.dart' as follows;
+import 'package:spotibud/src/models/top_of_artists.dart';
+import 'package:spotibud/src/models/top_of_songs.dart';
+import 'package:spotibud/src/models/followed_artists.dart';
 import 'package:spotibud/src/auth.dart' as auth;
-import 'package:spotibud/src/models/user_info.dart' as user;
+import 'package:spotibud/src/models/user_info.dart';
 
 String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
 
@@ -38,8 +38,6 @@ Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
         as Map<String, dynamic>;
     print(token);
     print(token['access_token']);
-    //dynamic accessToken = token['access_token'];
-    print("LOOK AT ME");
     UserSecureStorage.setTokenAsOwnerInStorage(token['access_token']);
     return token;
   }
@@ -78,7 +76,7 @@ Future<Map<String, dynamic>> getToken(String? code) async {
 }
 
 //User INFO
-Future<List<dynamic>> getUser(dynamic token) async {
+Future<List<UserInfo>> getUser(String? token) async {
   final Map<String, String> headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     "Authorization": "Bearer $token",
@@ -87,11 +85,9 @@ Future<List<dynamic>> getUser(dynamic token) async {
       await http.get(Uri.https("api.spotify.com", "/v1/me"), headers: headers);
   if (getUserResponse.statusCode == 200) {
     // If the server did return a 200 CREATED response,
-    List<dynamic> userList = [];
-    final user_info =
-        await convert.jsonDecode(getUserResponse.body) as Map<String, dynamic>;
-    userList.add(user.UserInfo.fromJson(user_info));
-    print(userList);
+    List<UserInfo> userList = List.empty(growable: true);
+    var user_info = await convert.jsonDecode(getUserResponse.body);
+    userList.add(UserInfo.fromJson(user_info));
     return userList;
   } else {
     // If the server did not return a 200 CREATED response,
@@ -101,12 +97,12 @@ Future<List<dynamic>> getUser(dynamic token) async {
 }
 
 //REFRESH TOKEN
-Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
+Future<Map<String, dynamic>> refreshToken(String? refreshToken) async {
   final Map<String, String> refreshTokenBody = {
     "grant_type": "refresh_token",
     "client_id": auth.client_id,
     "client_secret": auth.client_secret,
-    "refresh_token": refreshToken,
+    "refresh_token": "${refreshToken}",
   };
 
   final Map<String, String> refreshTokenHeaders = {
@@ -135,8 +131,8 @@ Future<Map<String, dynamic>> refreshToken(dynamic refreshToken) async {
 }
 
 // ТОП 10 artists
-Future<List<dynamic>> getUserTopArtists(dynamic token, String term) async {
-  getUser(token);
+Future<List<topOfArtists>> getUserTopArtists(String? token, String term) async {
+  //getUser(token);
   final Map<String, String> getUserArtistbody = {
     'time_range': '$term',
     'limit': '10',
@@ -154,13 +150,12 @@ Future<List<dynamic>> getUserTopArtists(dynamic token, String term) async {
       headers: getUserAristHeaders);
 
   if (getUserTopArtistResponse.statusCode == 200) {
-    List<dynamic> myList = List.filled(10, 0, growable: false);
-    var numberOfArtists = 10;
+    List<topOfArtists> myList = List.empty(growable: true);
+    int numberOfArtists = 10;
     // If the server did return a 200 CREATED response,
-    final artists_info = convert.jsonDecode(getUserTopArtistResponse.body)
-        as Map<String, dynamic>;
+    var artists_info = convert.jsonDecode(getUserTopArtistResponse.body);
     for (int i = 0; i < numberOfArtists; i++) {
-      myList[i] = artists.topOfArtists.fromJson(artists_info["items"][i]);
+      myList.add(topOfArtists.fromJson(artists_info["items"][i]));
     }
     return myList;
   } else {
@@ -172,7 +167,7 @@ Future<List<dynamic>> getUserTopArtists(dynamic token, String term) async {
 }
 
 //ТОП 10 tracks
-Future<List<dynamic>> getUserTopSongs(dynamic token, String term) async {
+Future<List<topOfSongs>> getUserTopSongs(String? token, String term) async {
   final Map<String, String> getUserSongBody = {
     'time_range': '$term',
     'limit': '10',
@@ -190,13 +185,12 @@ Future<List<dynamic>> getUserTopSongs(dynamic token, String term) async {
       headers: getUserSongHeaders);
 
   if (getUserTopSongsResponse.statusCode == 200) {
-    List<dynamic> newList = List.filled(10, 0, growable: false);
+    List<topOfSongs> newList = List.empty(growable: true);
     var numberOfSongs = 10;
     // If the server did return a 200 CREATED response,
-    final tracks_info = convert.jsonDecode(getUserTopSongsResponse.body)
-        as Map<String, dynamic>;
+    var tracks_info = convert.jsonDecode(getUserTopSongsResponse.body);
     for (int i = 0; i < numberOfSongs; i++) {
-      newList[i] = songs.topOfSongs.fromJson(tracks_info["items"][i]);
+      newList.add(topOfSongs.fromJson(tracks_info["items"][i]));
     }
     return newList;
   } else {
@@ -208,7 +202,7 @@ Future<List<dynamic>> getUserTopSongs(dynamic token, String term) async {
 }
 
 //followed artists
-Future<List<dynamic>> getFollowedArtists(dynamic token) async {
+Future<List<lastNews>> getFollowedArtists(String? token) async {
   final Map<String, String> getFollowedArtistsbody = {
     'type': 'artist',
     'limit': '50',
@@ -226,9 +220,9 @@ Future<List<dynamic>> getFollowedArtists(dynamic token) async {
 
   if (getFollowedArtistsResponse.statusCode == 200) {
     // If the server did return a 200 CREATED response,
-    final FollowedArtists_info = convert
-        .jsonDecode(getFollowedArtistsResponse.body) as Map<String, dynamic>;
-    List<String> idList = [];
+    var FollowedArtists_info =
+        convert.jsonDecode(getFollowedArtistsResponse.body);
+    List<String> idList = List.empty(growable: true);
     var numberOfArtists = FollowedArtists_info['artists']['total'] as int;
     if (numberOfArtists > 50) numberOfArtists = 50;
     for (int i = 0; i < numberOfArtists; i++) {
@@ -244,9 +238,9 @@ Future<List<dynamic>> getFollowedArtists(dynamic token) async {
 }
 
 //Last releases
-Future<List<dynamic>> getArtistLastRelease(
-    dynamic token, List<String> idList) async {
-  List<dynamic> newList = [];
+Future<List<lastNews>> getArtistLastRelease(
+    String? token, List<String> idList) async {
+  List<lastNews> newList = [];
   for (int i = 0; i < idList.length; i++) {
     final Map<String, String> getArtistSingleBody = {
       'include_groups': 'single',
@@ -276,15 +270,13 @@ Future<List<dynamic>> getArtistLastRelease(
         Uri.https('api.spotify.com', '/v1/artists/${idList[i]}/albums',
             getArtistSingleBody),
         headers: getArtistSingleHeaders);
-    final lastSingle_info = convert.jsonDecode(getArtistSingleResponse.body)
-        as Map<String, dynamic>;
+    var lastSingle_info = convert.jsonDecode(getArtistSingleResponse.body);
 
     final Response getArtistAlbumResponse = await http.get(
         Uri.https('api.spotify.com', '/v1/artists/${idList[i]}/albums',
             getArtistAlbumBody),
         headers: getArtistAlbumHeaders);
-    final lastAlbum_info =
-        convert.jsonDecode(getArtistAlbumResponse.body) as Map<String, dynamic>;
+    var lastAlbum_info = convert.jsonDecode(getArtistAlbumResponse.body);
 
     if (getArtistSingleResponse.statusCode == 200 ||
         getArtistAlbumResponse.statusCode == 200) {
@@ -296,9 +288,9 @@ Future<List<dynamic>> getArtistLastRelease(
         album = DateTime.utc(1900, 1, 1);
       }
       if (single.isAfter(album) == true) {
-        newList.add(follows.lastNews.fromJson(lastSingle_info['items'][0]));
+        newList.add(lastNews.fromJson(lastSingle_info['items'][0]));
       } else {
-        newList.add(follows.lastNews.fromJson(lastAlbum_info['items'][0]));
+        newList.add(lastNews.fromJson(lastAlbum_info['items'][0]));
       }
     } else {
       // If the server did not return a 200 CREATED response,
@@ -310,7 +302,8 @@ Future<List<dynamic>> getArtistLastRelease(
   return newList;
 }
 
-Future<List<dynamic>> getUserArtist(dynamic token) async {
+//Best artist
+Future<List<topOfArtists>> getUserArtist(String? token) async {
   final Map<String, String> getUserArtistbody = {
     'time_range': 'long_term',
     'limit': '1',
@@ -322,19 +315,19 @@ Future<List<dynamic>> getUserArtist(dynamic token) async {
     "Content-Type": "application/json",
     "Authorization": "Bearer $token",
   };
+
   final Response getUserTopArtistResponse = await http.get(
       Uri.https('api.spotify.com', '/v1/me/top/artists', getUserArtistbody),
       headers: getUserAristHeaders);
   print(getUserTopArtistResponse.statusCode);
-  final artists_info = convert.jsonDecode(getUserTopArtistResponse.body)
-  as Map<String, dynamic>;
-  List<dynamic> artistList = [];
-  artistList.add(artists.topOfArtists.fromJson(artists_info['items'][0]));
-  print(artistList);
+  var artists_info = convert.jsonDecode(getUserTopArtistResponse.body);
+  List<topOfArtists> artistList = List.empty(growable: true);
+  artistList.add(topOfArtists.fromJson(artists_info['items'][0]));
   return artistList;
 }
 
-Future<List<dynamic>> getUserSong(dynamic token) async {
+//Best song
+Future<List<topOfSongs>> getUserSong(String? token) async {
   final Map<String, String> getUserSongBody = {
     'time_range': 'long_term',
     'limit': '1',
@@ -347,15 +340,12 @@ Future<List<dynamic>> getUserSong(dynamic token) async {
     "Authorization": "Bearer $token",
   };
 
-
   final Response getUserTopSongsResponse = await http.get(
       Uri.https('api.spotify.com', '/v1/me/top/tracks', getUserSongBody),
       headers: getUserSongHeaders);
-  final songs_info = convert.jsonDecode(getUserTopSongsResponse.body)
-  as Map<String, dynamic>;
+  var songs_info = convert.jsonDecode(getUserTopSongsResponse.body);
   print(getUserTopSongsResponse.statusCode);
-  List<dynamic> songList = [];
-  songList.add(songs.topOfSongs.fromJson(songs_info['items'][0]));
-  print(songList);
+  List<topOfSongs> songList = List.empty(growable: true);
+  songList.add(topOfSongs.fromJson(songs_info['items'][0]));
   return songList;
 }

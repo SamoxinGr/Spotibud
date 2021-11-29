@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
+import 'package:spotibud/src/models/followed_artists.dart';
 
 part 'last_news_state.dart';
 

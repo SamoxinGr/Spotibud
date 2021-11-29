@@ -6,7 +6,7 @@ abstract class TopOfArtistsState {} // abstract states class
 class TopOfArtistsInitial extends TopOfArtistsState {}
 
 class TopOfArtistsLoadedState extends TopOfArtistsState {
-  final List topOfArtistsList;
+  final List<topOfArtists> topOfArtistsList;
 
   TopOfArtistsLoadedState(this.topOfArtistsList);
 }

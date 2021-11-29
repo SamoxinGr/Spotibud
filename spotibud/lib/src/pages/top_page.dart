@@ -43,7 +43,8 @@ class _TopSongsPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.black,
           body: const Center(
-            child: CircularProgressIndicator(backgroundColor: Colors.amber),
+            child:
+                CircularProgressIndicator(backgroundColor: Colors.greenAccent),
           ),
         );
       }
@@ -72,7 +73,11 @@ class _TopSongsPage extends StatelessWidget {
       elevation: 0,
       toolbarHeight: height / 10,
       title: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 40,),
+        padding: const EdgeInsets.only(
+          left: 5,
+          right: 5,
+          top: 40,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -83,18 +88,28 @@ class _TopSongsPage extends StatelessWidget {
                 color: Colors.grey[850],
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.grey.shade900,
-                      width: 1,
-                    )
-                ),
-                itemBuilder: (_) => const<PopupMenuItem<String>>[
-                  PopupMenuItem<String>(
-                      child: Text('All time', style: TextStyle(color: Colors.white60, fontFamily: "Inter"),), value: 'long_term'),
-                  PopupMenuItem<String>(
-                      child: Text('Half-year', style: TextStyle(color: Colors.white60, fontFamily: "Inter")), value: 'medium_term'),
-                  PopupMenuItem<String>(
-                      child: Text('Last month', style: TextStyle(color: Colors.white60, fontFamily: "Inter")), value: 'short_term'),
-                ],
+                  color: Colors.grey.shade900,
+                  width: 1,
+                )),
+                itemBuilder: (_) => const <PopupMenuItem<String>>[
+                      PopupMenuItem<String>(
+                          child: Text(
+                            'All time',
+                            style: TextStyle(
+                                color: Colors.white60, fontFamily: "Inter"),
+                          ),
+                          value: 'long_term'),
+                      PopupMenuItem<String>(
+                          child: Text('Half-year',
+                              style: TextStyle(
+                                  color: Colors.white60, fontFamily: "Inter")),
+                          value: 'medium_term'),
+                      PopupMenuItem<String>(
+                          child: Text('Last month',
+                              style: TextStyle(
+                                  color: Colors.white60, fontFamily: "Inter")),
+                          value: 'short_term'),
+                    ],
                 onSelected: (value) {
                   term = value as String;
                   context.read<TopOfSongsCubit>().loadtopOfSongs(term);

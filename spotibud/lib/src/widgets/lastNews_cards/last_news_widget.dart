@@ -21,7 +21,7 @@ Widget LastNewsWidget(
           minLeadingWidth: width / 10,
           minVerticalPadding: 20,
           leading: Image(
-            image: NetworkImage(item.images),
+            image: NetworkImage("${item.images}"),
           ),
           title: Text(
             "${item.name}",

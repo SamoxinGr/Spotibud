@@ -1,10 +1,10 @@
 class topOfSongs {
   String? id;
   String? author;
-  var external_urls;
+  String? external_urls;
   String? name;
   String? type;
-  var images;
+  String? images;
 
   topOfSongs({
     required this.id,

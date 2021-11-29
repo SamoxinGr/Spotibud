@@ -5,6 +5,7 @@ import 'package:spotibud/src/pages/root_app.dart';
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:spotibud/src/auth.dart' as auth;
 
 import 'package:spotibud/src/requests/requests.dart';
 import 'package:spotibud/src/utils/secure_storage.dart';
@@ -13,8 +14,8 @@ import 'home_page.dart';
 
 const AUTHORIZE = 'https://accounts.spotify.com/authorize';
 
-String client_id = "6e7d62a9d6d84e3b9fb0f0eef26050f5";
-String client_secret = "0891a218c5db42c6a47a062b209fe7ef";
+String client_id = auth.client_id;
+String client_secret = auth.client_secret;
 String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
 
 class LoginScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
           print('Check');
           print(token);
 
-          var myToken = await getToken(token);
+          Map<String, dynamic> myToken = await getToken(token);
           UserSecureStorage.setTokenInStorage(myToken['access_token']);
           //await getUserTopArtists(myToken['access_token']); // временно
           //await getUserTopSongs(myToken["access_token"]);
