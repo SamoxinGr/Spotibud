@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App is loading</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="web/style.css">
 </head>
 
 <body>
 
 <div id = "loader"></div>
 
+<script>
+    let preloader = document.getElementById("loader");
+    window.addEventListener("load", function(){
+        preloader.style.display = "none";
+    })
+</script>
 </body>
 </html>

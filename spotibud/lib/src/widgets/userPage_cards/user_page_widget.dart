@@ -13,33 +13,62 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
       elevation: 7,
       shadowColor: Colors.grey[700],
       child: SizedBox(
-        height: height / 2,
+        height: height / 1.5,
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage('${item.image}'),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage('${item.image}'),
+                radius: 50,
+              ),
             ),
-            Text(
-              '${item.name}',
-              style: TextStyle(
-                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${item.name}',
+                style: TextStyle(
+                    fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+              ),
             ),
-            Text(
-              '${item.country}',
-              style: TextStyle(
-                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+             Row(
+               children: [
+                 Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      'Your favourite Artist:',
+                      style: TextStyle(
+                          fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+                    ),
+                  ),
+                 Text('${artists.name}',
+                 style: TextStyle(
+                 fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+                 ),
+               ],
+             ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: CircleAvatar(backgroundImage: NetworkImage('${artists.images}'), radius: 40
+              ),
             ),
-            Text(
-              'Artist - ${artists.name}',
-              style: TextStyle(
-                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
+              child: Text('Your favorite song: ', style: TextStyle(
+                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),),
             ),
-            Text(
-              'Song - ${songs.name} (${artists.name})',
-              style: TextStyle(
-                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 15),
+              child: Text('${songs.name} by ${songs.author}', style: TextStyle(
+                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),),
             ),
+            CircleAvatar(backgroundImage: NetworkImage('${songs.images}'), radius: 40
+            ),
+
           ],
         ),
       ));
 }
+
+
