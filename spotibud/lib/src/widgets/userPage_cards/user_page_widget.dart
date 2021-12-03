@@ -13,14 +13,14 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
       elevation: 7,
       shadowColor: Colors.grey[700],
       child: SizedBox(
-        height: height / 1.5,
+        height: height / 1.3,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),
               child: CircleAvatar(
                 backgroundImage: NetworkImage('${item.image}'),
-                radius: 50,
+                radius: height / 13,
               ),
             ),
             Padding(
@@ -54,7 +54,7 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: CircleAvatar(
                   backgroundImage: NetworkImage('${artists.images}'),
-                  radius: 50),
+                  radius: height / 13),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
@@ -65,7 +65,7 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 15),
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 18),
               child: Text(
                 '${songs.name} by ${songs.author}',
                 style: TextStyle(
@@ -73,7 +73,7 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               ),
             ),
             Image(
-              image: NetworkImage('${songs.images}', scale: 7),
+              image: NetworkImage('${songs.images}', scale: height / 110),
             ),
           ],
         ),
