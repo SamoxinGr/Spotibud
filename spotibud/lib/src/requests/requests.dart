@@ -8,12 +8,7 @@ import 'package:spotibud/src/models/followed_artists.dart';
 import 'package:spotibud/src/auth.dart' as auth;
 import 'package:spotibud/src/models/user_info.dart';
 
-<<<<<<< HEAD
 String redirect_uri = "https://samoxingr.github.io/Naughty-code/index.html";
-=======
-//String redirect_uri = "https://github.com/SamoxinGr/Naughty-code";
-String redirect_uri = "https://samoxingr.github.io/Naughty-code/";
->>>>>>> 2d21f721e0db08d0b04715871be51d90ff1d8678
 
 Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
   final Map<String, String> tokenBody = {
@@ -21,12 +16,7 @@ Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
     "client_id": auth.client_id,
     "client_secret": auth.client_secret,
     "code": "$code",
-<<<<<<< HEAD
     "redirect_uri": 'https://samoxingr.github.io/Naughty-code/index.html'
-=======
-    //"redirect_uri": 'https://github.com/SamoxinGr/Naughty-code'
-    "redirect_uri": "https://samoxingr.github.io/Naughty-code/",
->>>>>>> 2d21f721e0db08d0b04715871be51d90ff1d8678
   };
 
   final Map<String, String> headers = {
@@ -60,12 +50,7 @@ Future<Map<String, dynamic>> getToken(String? code) async {
     "client_id": auth.client_id,
     "client_secret": auth.client_secret,
     "code": "$code",
-<<<<<<< HEAD
     "redirect_uri": 'https://samoxingr.github.io/Naughty-code/index.html'
-=======
-    //"redirect_uri": 'https://github.com/SamoxinGr/Naughty-code'
-    "redirect_uri": "https://samoxingr.github.io/Naughty-code/",
->>>>>>> 2d21f721e0db08d0b04715871be51d90ff1d8678
   };
 
   final Map<String, String> headers = {
@@ -90,7 +75,7 @@ Future<Map<String, dynamic>> getToken(String? code) async {
   }
 }
 
-//User INFO
+//User info
 Future<List<UserInfo>> getUser(String? token) async {
   final Map<String, String> headers = {
     "Content-Type": "application/x-www-form-urlencoded",
@@ -111,7 +96,7 @@ Future<List<UserInfo>> getUser(String? token) async {
   }
 }
 
-//REFRESH TOKEN
+//Refresh token
 Future<Map<String, dynamic>> refreshToken(String? refreshToken) async {
   final Map<String, String> refreshTokenBody = {
     "grant_type": "refresh_token",
@@ -145,9 +130,8 @@ Future<Map<String, dynamic>> refreshToken(String? refreshToken) async {
   }
 }
 
-// ТОП 10 artists
+// Top 10 artists
 Future<List<topOfArtists>> getUserTopArtists(String? token, String term) async {
-  //getUser(token);
   final Map<String, String> getUserArtistbody = {
     'time_range': '$term',
     'limit': '10',
@@ -181,7 +165,7 @@ Future<List<topOfArtists>> getUserTopArtists(String? token, String term) async {
   }
 }
 
-//ТОП 10 tracks
+//Top 10 tracks
 Future<List<topOfSongs>> getUserTopSongs(String? token, String term) async {
   final Map<String, String> getUserSongBody = {
     'time_range': '$term',
@@ -216,7 +200,7 @@ Future<List<topOfSongs>> getUserTopSongs(String? token, String term) async {
   }
 }
 
-//followed artists
+//Followed artists
 Future<List<lastNews>> getFollowedArtists(String? token) async {
   final Map<String, String> getFollowedArtistsbody = {
     'type': 'artist',

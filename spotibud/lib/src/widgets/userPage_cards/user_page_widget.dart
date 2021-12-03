@@ -31,44 +31,51 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
                     fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
               ),
             ),
-             Row(
-               children: [
-                 Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Your favourite Artist:',
-                      style: TextStyle(
-                          fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
-                    ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(
+                    'Your favourite Artist:',
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: Colors.white70,
+                        fontSize: 20),
                   ),
-                 Text('${artists.name}',
-                 style: TextStyle(
-                 fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
-                 ),
-               ],
-             ),
-
+                ),
+                Text(
+                  '${artists.name}',
+                  style: TextStyle(
+                      fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: CircleAvatar(backgroundImage: NetworkImage('${artists.images}'), radius: 40
-              ),
+              child: CircleAvatar(
+                  backgroundImage: NetworkImage('${artists.images}'),
+                  radius: 50),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
-              child: Text('Your favorite song: ', style: TextStyle(
-                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),),
+              child: Text(
+                'Your favorite song: ',
+                style: TextStyle(
+                    fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 15),
-              child: Text('${songs.name} by ${songs.author}', style: TextStyle(
-                  fontFamily: 'Inter', color: Colors.white70, fontSize: 20),),
+              child: Text(
+                '${songs.name} by ${songs.author}',
+                style: TextStyle(
+                    fontFamily: 'Inter', color: Colors.white70, fontSize: 20),
+              ),
             ),
-            CircleAvatar(backgroundImage: NetworkImage('${songs.images}'), radius: 40
+            Image(
+              image: NetworkImage('${songs.images}', scale: 7),
             ),
-
           ],
         ),
       ));
 }
-
-

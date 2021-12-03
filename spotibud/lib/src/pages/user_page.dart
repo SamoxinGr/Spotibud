@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotibud/src/utils/url_launch.dart';
-import 'package:spotibud/src/widgets/lastNews_cards/last_news_widget.dart';
-import 'package:spotibud/src/models/user_info.dart' as user;
 import 'package:spotibud/src/widgets/userPage_cards/user_page_widget.dart';
-
 import '../pages/cubit/userPage/user_page_cubit.dart';
 
 class UserPage extends StatelessWidget {
@@ -33,7 +29,7 @@ class _UserState extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.black,
           body: const Center(
-            child: CircularProgressIndicator(backgroundColor: Colors.greenAccent),
+            child: CircularProgressIndicator(backgroundColor: Colors.black),
           ),
         );
       }
@@ -84,7 +80,8 @@ class _UserState extends StatelessWidget {
       itemCount: state.userList.length,
       itemBuilder: (context, index) {
         return InkWell(
-          child: UserInfoWidget(state.userList[index], state.artistList[index], state.songList[index], context, state),
+          child: UserInfoWidget(state.userList[index], state.artistList[index],
+              state.songList[index], context, state),
         );
       },
     );

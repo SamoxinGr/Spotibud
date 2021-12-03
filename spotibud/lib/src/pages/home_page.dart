@@ -31,8 +31,7 @@ class _HomePageState extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.black,
           body: const Center(
-            child:
-                CircularProgressIndicator(backgroundColor: Colors.greenAccent),
+            child: CircularProgressIndicator(backgroundColor: Colors.black),
           ),
         );
       }

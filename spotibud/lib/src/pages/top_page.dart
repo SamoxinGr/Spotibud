@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:spotibud/src/models/top_of_songs.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:spotibud/src/widgets/topOfSongs_cards/top_of_songs_widget.dart';
-import 'dart:convert' as convert;
-
 import '../pages/cubit/topOfSongs/top_of_songs_cubit.dart';
 
 class SongsPage extends StatelessWidget {
@@ -19,13 +15,6 @@ class SongsPage extends StatelessWidget {
       child: const _TopSongsPage(),
     );
   }
-
-  /*@override
-  Widget getSongs(BuildContext context){
-    return BlocProvider(create: (_) => topOfSongsCubit(),
-      child: const _TopSongsPage(),
-    );
-  }*/
 }
 
 class _TopSongsPage extends StatelessWidget {
@@ -43,8 +32,7 @@ class _TopSongsPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.black,
           body: const Center(
-            child:
-                CircularProgressIndicator(backgroundColor: Colors.greenAccent),
+            child: CircularProgressIndicator(backgroundColor: Colors.black),
           ),
         );
       }
@@ -114,7 +102,6 @@ class _TopSongsPage extends StatelessWidget {
                   term = value as String;
                   context.read<TopOfSongsCubit>().loadtopOfSongs(term);
                 }),
-            //Сделать кнопку,вы зывающую виджет с выбором параметров запроса
           ],
         ),
       ),
@@ -122,8 +109,6 @@ class _TopSongsPage extends StatelessWidget {
   }
 
   Widget getBody(state) {
-    //var screenHeight = MediaQuery.of().size.height;
-    //var screenWidth = MediaQuery.of().size.width;
     return ListView.builder(
       itemCount: state.topOfSongsList.length,
       itemBuilder: (context, index) {

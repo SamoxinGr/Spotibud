@@ -17,7 +17,6 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> loadUser() async {
     try {
-      // request top songs
       final user_info =
           await getUser(await UserSecureStorage.getTokenFromStorage());
       final artist =

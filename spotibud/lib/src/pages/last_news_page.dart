@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotibud/src/utils/url_launch.dart';
 import 'package:spotibud/src/widgets/lastNews_cards/last_news_widget.dart';
-
 import '../pages/cubit/lastNews/last_news_cubit.dart';
 
 class LastNewsPage extends StatelessWidget {
@@ -31,8 +30,7 @@ class _LastNewsState extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.black,
           body: const Center(
-            child:
-                CircularProgressIndicator(backgroundColor: Colors.greenAccent),
+            child: CircularProgressIndicator(backgroundColor: Colors.black),
           ),
         );
       }

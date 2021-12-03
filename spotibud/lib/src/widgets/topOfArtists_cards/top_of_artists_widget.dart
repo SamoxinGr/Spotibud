@@ -10,7 +10,6 @@ Widget TopOfArtistsWidget(
     margin: EdgeInsets.all(10),
     elevation: 7,
     shape: RoundedRectangleBorder(
-        //side: BorderSide(color: Colors.grey, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10))),
     shadowColor: Colors.grey[700],
     child: Column(
