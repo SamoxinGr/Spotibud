@@ -1,6 +1,6 @@
 #loader{
-    background: #000 url(web_assets/preloader.gif) no-repeat center center;
-    height: 100vh;
+    background: #000 url(web/web_assets/real_loader.gif) no-repeat center center;
+    height: 100%;
     width: 100%;
     position: fixed;
     z-index: 100;
