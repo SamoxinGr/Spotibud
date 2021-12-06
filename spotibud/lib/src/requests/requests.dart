@@ -8,7 +8,7 @@ import 'package:spotibud/src/models/followed_artists.dart';
 import 'package:spotibud/src/auth.dart' as auth;
 import 'package:spotibud/src/models/user_info.dart';
 
-String redirect_uri = "https://samoxingr.github.io/Naughty-code/index.html";
+String redirect_uri = "https://samoxingr.github.io/Naughty-code";
 
 Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
   final Map<String, String> tokenBody = {
@@ -16,7 +16,7 @@ Future<Map<String, dynamic>> getTokenAsOwner(String? code) async {
     "client_id": auth.client_id,
     "client_secret": auth.client_secret,
     "code": "$code",
-    "redirect_uri": 'https://samoxingr.github.io/Naughty-code/index.html'
+    "redirect_uri": 'https://samoxingr.github.io/Naughty-code'
   };
 
   final Map<String, String> headers = {
@@ -50,7 +50,7 @@ Future<Map<String, dynamic>> getToken(String? code) async {
     "client_id": auth.client_id,
     "client_secret": auth.client_secret,
     "code": "$code",
-    "redirect_uri": 'https://samoxingr.github.io/Naughty-code/index.html'
+    "redirect_uri": 'https://samoxingr.github.io/Naughty-code'
   };
 
   final Map<String, String> headers = {

@@ -10,7 +10,7 @@ const AUTHORIZE = 'https://accounts.spotify.com/authorize';
 
 String client_id = auth.client_id;
 String client_secret = auth.client_secret;
-String redirect_uri = "https://samoxingr.github.io/Naughty-code/index.html";
+String redirect_uri = "https://samoxingr.github.io/Naughty-code";
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -55,8 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         flutterWebviewPlugin.onUrlChanged.listen((String url) async {
       if (mounted) {
         print("URL changed: $url");
-        if (url.startsWith(
-            'https://samoxingr.github.io/Naughty-code/index.html')) {
+        if (url.startsWith('https://samoxingr.github.io/Naughty-code')) {
           RegExp regExp = RegExp("code=(.*)");
           this.token = regExp.firstMatch(url)?.group(1);
           print(this.token);

@@ -14,7 +14,7 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
       elevation: 7,
       shadowColor: Colors.grey[700],
       child: SizedBox(
-        height: height /1.25,
+        height: height / 1.3,
         child: Column(
           children: [
             Padding(
@@ -29,7 +29,9 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               child: Text(
                 '${item.name}',
                 style: TextStyle(
-                    fontFamily: 'Inter', color: Colors.white70, fontSize: width /15),
+                    fontFamily: 'Inter',
+                    color: Colors.white70,
+                    fontSize: width / 15),
               ),
             ),
             Row(
@@ -47,7 +49,9 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
                 Text(
                   '${artists.name}',
                   style: TextStyle(
-                      fontFamily: 'Inter', color: Colors.white70, fontSize: width / 20),
+                      fontFamily: 'Inter',
+                      color: Colors.white70,
+                      fontSize: width / 20),
                 ),
               ],
             ),
@@ -55,14 +59,16 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: CircleAvatar(
                   backgroundImage: NetworkImage('${artists.images}'),
-                  radius: height / 13),
+                  radius: height / 15),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 5),
               child: Text(
                 'Your favorite song: ',
                 style: TextStyle(
-                    fontFamily: 'Inter', color: Colors.white70, fontSize: width / 20),
+                    fontFamily: 'Inter',
+                    color: Colors.white70,
+                    fontSize: width / 20),
               ),
             ),
             Padding(
@@ -70,11 +76,13 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               child: Text(
                 '"${songs.name}" by ${songs.author}',
                 style: TextStyle(
-                    fontFamily: 'Inter', color: Colors.white70, fontSize: width / 20),
+                    fontFamily: 'Inter',
+                    color: Colors.white70,
+                    fontSize: width / 20),
               ),
             ),
             Image(
-              image: NetworkImage('${songs.images}', scale: height / 100),
+              image: NetworkImage('${songs.images}', scale: height / 120),
             ),
           ],
         ),
