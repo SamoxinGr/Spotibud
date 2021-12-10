@@ -14,7 +14,7 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
       elevation: 7,
       shadowColor: Colors.grey[700],
       child: SizedBox(
-        height: height / 1.3,
+        height: height / 1.25,
         child: Column(
           children: [
             Padding(
@@ -39,19 +39,22 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: Text(
-                    'Your favourite Artist:',
+                    'Your favourite artist:',
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: Colors.white70,
                         fontSize: width / 20),
                   ),
                 ),
-                Text(
-                  '${artists.name}',
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      color: Colors.white70,
-                      fontSize: width / 20),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: Text(
+                    '${artists.name}',
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: Colors.white70,
+                        fontSize: width / 20),
+                  ),
                 ),
               ],
             ),
@@ -82,7 +85,7 @@ Widget UserInfoWidget(UserInfo item, topOfArtists artists, topOfSongs songs,
               ),
             ),
             Image(
-              image: NetworkImage('${songs.images}', scale: height / 120),
+              image: NetworkImage('${songs.images}', scale: height / 132),
             ),
           ],
         ),

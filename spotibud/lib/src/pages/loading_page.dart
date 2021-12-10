@@ -67,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (this.token != '0') {
             setState(() {
               flutterWebviewPlugin.close();
+              Navigator.pop(context, LoginScreen());
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => RootApp()));
             });
