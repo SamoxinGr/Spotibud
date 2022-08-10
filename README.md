@@ -28,6 +28,6 @@ The user's page showing the most listened artist and the most listened song.
 # Resources
 <b>This project uses resources:</b>
 <ul>
-<li>IMDb API documentation - https://developer.spotify.com/</li>
+<li>Spotify API documentation - https://developer.spotify.com/</li>
 <li>TaskBoard - https://trello.com/b/GAB23OP6/team-7 </li>
 </ul>
